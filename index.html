@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renomeador de XML NF-e</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            margin-bottom: 20px;
+            background: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .upload-area p {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .upload-area small {
+            color: #999;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .options-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .options-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .separator-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .separator-input input {
+            flex: 1;
+        }
+
+        .preview-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .preview-btn:hover {
+            opacity: 0.9;
+        }
+
+        .preview-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .file-list-container {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-info {
+            flex: 2;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .file-preview {
+            font-size: 12px;
+            color: #666;
+            margin: 2px 0;
+        }
+
+        .new-name {
+            font-size: 13px;
+            color: #28a745;
+            margin-top: 5px;
+            word-break: break-all;
+            font-weight: 500;
+        }
+
+        .file-actions {
+            flex: 1;
+            text-align: right;
+        }
+
+        .download-btn {
+            padding: 8px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #218838;
+        }
+
+        .download-all-btn {
+            width: 100%;
+            padding: 15px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .download-all-btn:hover {
+            background: #138496;
+        }
+
+        .download-all-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .success {
+            color: #28a745;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .badge-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .badge-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #e8f4fd;
+            border-radius: 5px;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .tooltip {
+            cursor: help;
+            padding: 5px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📄 Renomeador de XML NF-e</h1>
+        <p class="subtitle">Selecione os arquivos XML e escolha o formato de renomeação</p>
+
+        <div class="upload-area" id="uploadArea">
+            <i>📂</i>
+            <p>Arraste e solte arquivos XML aqui ou clique para selecionar</p>
+            <small>Suporta múltiplos arquivos</small>
+            <input type="file" id="fileInput" class="file-input" multiple accept=".xml">
+        </div>
+
+        <div class="options-section">
+            <h3>⚙️ Opções de Renomeação</h3>
+            
+            <div class="option-group">
+                <label for="formatSelect">Formato do nome:</label>
+                <select id="formatSelect">
+                    <option value="cnpj_periodo">CNPJ Destinatário + Período (MM-AAAA)</option>
+                    <option value="cnpj_data">CNPJ Destinatário + Data Emissão (DD-MM-AAAA)</option>
+                    <option value="razao_periodo">Razão Social + Período (MM-AAAA)</option>
+                    <option value="razao_data">Razão Social + Data Emissão (DD-MM-AAAA)</option>
+                    <option value="cnpj_nf">CNPJ + Número NF</option>
+                    <option value="custom" selected>Formato Personalizado</option>
+                </select>
+            </div>
+
+            <div class="option-group" id="customFormatGroup">
+                <label for="customFormat">Formato personalizado:</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="customFormat" value="{cnpj}_{ano}{mes}_{nNF}" placeholder="Ex: {cnpj}_{ano}{mes}_{nNF}">
+                    <span class="tooltip" title="Tags disponíveis: {cnpj}, {razao}, {ano}, {mes}, {dia}, {nNF}, {serie}, {chave}">📝</span>
+                </div>
+                <small style="color: #666; display: block; margin-top: 5px;">Use as tags: {cnpj}, {razao}, {ano}, {mes}, {dia}, {nNF}, {serie}, {chave}</small>
+            </div>
+
+            <div class="option-group">
+                <label for="separator">Separador:</label>
+                <input type="text" id="separator" value="_" maxlength="5" placeholder="_">
+            </div>
+        </div>
+
+        <div id="statsContainer" style="display: none;" class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalFiles">0</div>
+                <div class="stat-label">Total Arquivos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="successFiles">0</div>
+                <div class="stat-label">Processados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="errorFiles">0</div>
+                <div class="stat-label">Erros</div>
+            </div>
+        </div>
+
+        <button class="preview-btn" id="previewBtn" disabled>👁️ Visualizar Renomeação</button>
+
+        <div id="fileListContainer" style="display: none;">
+            <h3>📋 Arquivos Processados</h3>
+            <div class="file-list-container" id="fileList"></div>
+            
+            <button class="download-all-btn" id="downloadAllBtn" disabled>📥 Baixar Todos Renomeados (ZIP)</button>
+        </div>
+    </div>
+
+    <script>
+        class NFeRenamer {
+            constructor() {
+                this.files = [];
+                this.processedFiles = [];
+                
+                this.initElements();
+                this.initEventListeners();
+            }
+
+            initElements() {
+                this.uploadArea = document.getElementById('uploadArea');
+                this.fileInput = document.getElementById('fileInput');
+                this.formatSelect = document.getElementById('formatSelect');
+                this.customFormatGroup = document.getElementById('customFormatGroup');
+                this.customFormat = document.getElementById('customFormat');
+                this.separator = document.getElementById('separator');
+                this.previewBtn = document.getElementById('previewBtn');
+                this.fileListContainer = document.getElementById('fileListContainer');
+                this.fileList = document.getElementById('fileList');
+                this.downloadAllBtn = document.getElementById('downloadAllBtn');
+                this.statsContainer = document.getElementById('statsContainer');
+                this.totalFilesEl = document.getElementById('totalFiles');
+                this.successFilesEl = document.getElementById('successFiles');
+                this.errorFilesEl = document.getElementById('errorFiles');
+            }
+
+            initEventListeners() {
+                this.uploadArea.addEventListener('click', () => this.fileInput.click());
+                
+                this.uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.uploadArea.style.borderColor = '#667eea';
+                    this.uploadArea.style.background = '#f0f3ff';
+                });
+
+                this.uploadArea.addEventListener('dragleave', () => {
+                    this.uploadArea.style.borderColor = '#ccc';
+                    this.uploadArea.style.background = '#fafafa';
+                });
+
+                this.uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.uploadArea.style.borderColor = '#ccc';
+                    this.uploadArea.style.background = '#fafafa';
+                    this.handleFiles(e.dataTransfer.files);
+                });
+
+                this.fileInput.addEventListener('change', (e) => {
+                    this.handleFiles(e.target.files);
+                });
+
+                this.formatSelect.addEventListener('change', () => {
+                    this.customFormatGroup.style.display = 
+                        this.formatSelect.value === 'custom' ? 'block' : 'none';
+                });
+
+                this.previewBtn.addEventListener('click', () => this.previewRenaming());
+                this.downloadAllBtn.addEventListener('click', () => this.downloadAll());
+            }
+
+            handleFiles(fileList) {
+                const xmlFiles = Array.from(fileList).filter(file => 
+                    file.name.toLowerCase().endsWith('.xml')
+                );
+
+                if (xmlFiles.length === 0) {
+                    alert('Por favor, selecione apenas arquivos XML.');
+                    return;
+                }
+
+                if (xmlFiles.length > 50) {
+                    alert('Muitos arquivos! Processando os primeiros 50 para melhor performance.');
+                    this.files = xmlFiles.slice(0, 50);
+                } else {
+                    this.files = xmlFiles;
+                }
+
+                this.previewBtn.disabled = false;
+                this.statsContainer.style.display = 'flex';
+                this.totalFilesEl.textContent = this.files.length;
+                this.successFilesEl.textContent = '0';
+                this.errorFilesEl.textContent = '0';
+                
+                this.showSelectedFiles();
+            }
+
+            showSelectedFiles() {
+                this.fileListContainer.style.display = 'block';
+                this.fileList.innerHTML = '';
+                
+                this.files.forEach(file => {
+                    const item = document.createElement('div');
+                    item.className = 'file-item';
+                    item.innerHTML = `
+                        <div class="file-info">
+                            <div class="file-name">📄 ${this.escapeHtml(file.name)}</div>
+                            <div class="file-preview">Tamanho: ${(file.size / 1024).toFixed(2)} KB</div>
+                            <div class="file-preview">Aguardando processamento...</div>
+                        </div>
+                        <div class="file-actions">
+                            <span class="badge badge-secondary">⏳ Aguardando</span>
+                        </div>
+                    `;
+                    this.fileList.appendChild(item);
+                });
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            async previewRenaming() {
+                this.processedFiles = [];
+                this.fileList.innerHTML = '';
+                let successCount = 0;
+                let errorCount = 0;
+
+                for (const file of this.files) {
+                    try {
+                        const result = await this.processFile(file);
+                        this.processedFiles.push(result);
+                        this.addFileToList(result);
+                        successCount++;
+                    } catch (error) {
+                        this.addErrorToList(file, error.message);
+                        errorCount++;
+                    }
+                    
+                    this.successFilesEl.textContent = successCount;
+                    this.errorFilesEl.textContent = errorCount;
+                }
+
+                this.downloadAllBtn.disabled = this.processedFiles.length === 0;
+            }
+
+            async processFile(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        try {
+                            const parser = new DOMParser();
+                            const xmlDoc = parser.parseFromString(e.target.result, 'text/xml');
+                            
+                            const parseError = xmlDoc.getElementsByTagName('parsererror');
+                            if (parseError.length > 0) {
+                                throw new Error('XML inválido');
+                            }
+
+                            const data = this.extractDataFromXML(xmlDoc);
+                            const newName = this.generateNewName(data);
+                            
+                            resolve({
+                                originalFile: file,
+                                originalName: file.name,
+                                newName: newName,
+                                data: data,
+                                content: e.target.result
+                            });
+                        } catch (error) {
+                            reject(new Error(`Erro ao processar: ${error.message}`));
+                        }
+                    };
+
+                    reader.onerror = () => reject(new Error(`Erro ao ler arquivo`));
+                    reader.readAsText(file);
+                });
+            }
+
+            extractDataFromXML(xmlDoc) {
+                // Função auxiliar para obter texto de elementos
+                function getText(element, tag) {
+                    if (!element) return '';
+                    const el = element.getElementsByTagName(tag)[0];
+                    return el ? el.textContent || el.innerHTML : '';
+                }
+
+                function getTextNS(element, tag) {
+                    if (!element) return '';
+                    const el = element.getElementsByTagNameNS('*', tag)[0];
+                    return el ? el.textContent || el.innerHTML : '';
+                }
+
+                // Buscar elementos principais
+                const dest = xmlDoc.getElementsByTagNameNS('*', 'dest')[0] || 
+                            xmlDoc.getElementsByTagName('dest')[0];
+                const emit = xmlDoc.getElementsByTagNameNS('*', 'emit')[0] || 
+                            xmlDoc.getElementsByTagName('emit')[0];
+                const ide = xmlDoc.getElementsByTagNameNS('*', 'ide')[0] || 
+                           xmlDoc.getElementsByTagName('ide')[0];
+                const infNFe = xmlDoc.getElementsByTagNameNS('*', 'infNFe')[0] || 
+                              xmlDoc.getElementsByTagName('infNFe')[0];
+                
+                // CNPJ
+                let cnpj = '';
+                if (dest) {
+                    cnpj = getTextNS(dest, 'CNPJ') || getText(dest, 'CNPJ');
+                }
+                if (!cnpj && emit) {
+                    cnpj = getTextNS(emit, 'CNPJ') || getText(emit, 'CNPJ');
+                }
+                
+                // Razão Social
+                let razao = '';
+                if (dest) {
+                    razao = getTextNS(dest, 'xNome') || getText(dest, 'xNome');
+                }
+                if (!razao && emit) {
+                    razao = getTextNS(emit, 'xNome') || getText(emit, 'xNome');
+                }
+
+                // Data
+                let ano = '0000', mes = '00', dia = '00';
+                if (ide) {
+                    let dataEmissao = getTextNS(ide, 'dhEmi') || getTextNS(ide, 'dEmi') || 
+                                     getText(ide, 'dhEmi') || getText(ide, 'dEmi');
+                    
+                    if (dataEmissao) {
+                        if (dataEmissao.includes('T')) {
+                            dataEmissao = dataEmissao.split('T')[0];
+                        }
+                        const parts = dataEmissao.split('-');
+                        if (parts.length === 3) {
+                            ano = parts[0];
+                            mes = parts[1];
+                            dia = parts[2];
+                        }
+                    }
+                }
+
+                // Número NF e Série
+                let nNF = '';
+                let serie = '';
+                if (ide) {
+                    nNF = getTextNS(ide, 'nNF') || getText(ide, 'nNF');
+                    serie = getTextNS(ide, 'serie') || getText(ide, 'serie');
+                }
+
+                // Chave
+                let chave = '';
+                if (infNFe) {
+                    chave = infNFe.getAttribute('Id') || '';
+                    if (chave.startsWith('NFe')) {
+                        chave = chave.substring(3);
+                    }
+                }
+
+                return {
+                    cnpj: cnpj || 'CNPJ_NAO_ENCONTRADO',
+                    razao: this.sanitizeFileName(razao || 'RAZAO_NAO_ENCONTRADA'),
+                    ano: ano,
+                    mes: mes,
+                    dia: dia,
+                    nNF: nNF || '000',
+                    serie: serie || '000',
+                    chave: chave || 'CHAVE_NAO_ENCONTRADA'
+                };
+            }
+
+            sanitizeFileName(str) {
+                return str.replace(/[<>:"\/\\|?*\x00-\x1F]/g, '_')
+                          .replace(/\s+/g, '_')
+                          .replace(/[áàãâä]/g, 'a')
+                          .replace(/[éèêë]/g, 'e')
+                          .replace(/[íìîï]/g, 'i')
+                          .replace(/[óòõôö]/g, 'o')
+                          .replace(/[úùûü]/g, 'u')
+                          .replace(/[ç]/g, 'c')
+                          .replace(/[ñ]/g, 'n')
+                          .substring(0, 50);
+            }
+
+            generateNewName(data) {
+                const sep = this.separator.value || '_';
+                const format = this.formatSelect.value;
+                
+                let name = '';
+                
+                switch(format) {
+                    case 'cnpj_periodo':
+                        name = `${data.cnpj}${sep}${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'cnpj_data':
+                        name = `${data.cnpj}${sep}${data.dia}-${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'razao_periodo':
+                        name = `${data.razao}${sep}${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'razao_data':
+                        name = `${data.razao}${sep}${data.dia}-${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'cnpj_nf':
+                        name = `${data.cnpj}${sep}NF${data.nNF}`;
+                        break;
+                        
+                    case 'custom':
+                        name = this.customFormat.value
+                            .replace(/{cnpj}/g, data.cnpj)
+                            .replace(/{razao}/g, data.razao)
+                            .replace(/{ano}/g, data.ano)
+                            .replace(/{mes}/g, data.mes)
+                            .replace(/{dia}/g, data.dia)
+                            .replace(/{nNF}/g, data.nNF)
+                            .replace(/{serie}/g, data.serie)
+                            .replace(/{chave}/g, data.chave);
+                        break;
+                        
+                    default:
+                        name = `${data.cnpj}${sep}${data.mes}-${data.ano}`;
+                }
+                
+                name = name.replace(new RegExp(`${sep}+$`), '')
+                           .replace(new RegExp(`${sep}+`, 'g'), sep);
+                
+                return `${name}.xml`;
+            }
+
+            addFileToList(result) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-name">📄 ${this.escapeHtml(result.originalName)}</div>
+                        <div class="file-preview">CNPJ: ${result.data.cnpj}</div>
+                        <div class="file-preview">Razão: ${result.data.razao}</div>
+                        <div class="new-name">✨ Novo: ${this.escapeHtml(result.newName)}</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="download-btn" data-name="${this.escapeHtml(result.newName)}">📥 Baixar</button>
+                    </div>
+                `;
+                
+                const btn = item.querySelector('.download-btn');
+                btn.addEventListener('click', () => this.downloadSingle(result));
+                
+                this.fileList.appendChild(item);
+            }
+
+            addErrorToList(file, errorMessage) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-name">📄 ${this.escapeHtml(file.name)}</div>
+                        <div class="error">❌ ${this.escapeHtml(errorMessage)}</div>
+                    </div>
+                    <div class="file-actions">
+                        <span class="badge badge-secondary">❌ Erro</span>
+                    </div>
+                `;
+                this.fileList.appendChild(item);
+            }
+
+            downloadSingle(result) {
+                const blob = new Blob([result.content], { type: 'application/xml' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = result.newName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            async downloadAll() {
+                if (this.processedFiles.length === 0) return;
+                
+                if (this.processedFiles.length === 1) {
+                    this.downloadSingle(this.processedFiles[0]);
+                    return;
+                }
+                
+                try {
+                    this.downloadAllBtn.disabled = true;
+                    this.downloadAllBtn.textContent = '⏳ Gerando ZIP...';
+                    
+                    await this.createZipAndDownload();
+                    
+                    this.downloadAllBtn.disabled = false;
+                    this.downloadAllBtn.textContent = '📥 Baixar Todos Renomeados (ZIP)';
+                } catch (error) {
+                    alert('Erro ao criar ZIP. Baixando individualmente...');
+                    this.processedFiles.forEach(file => this.downloadSingle(file));
+                    this.downloadAllBtn.disabled = false;
+                    this.downloadAllBtn.textContent = '📥 Baixar Todos Renomeados (ZIP)';
+                }
+            }
+
+            async createZipAndDownload() {
+                // JSZip inline para não depender de CDN
+                const JSZip = this.getJSZip();
+                
+                const zip = new JSZip();
+                
+                this.processedFiles.forEach(result => {
+                    zip.file(result.newName, result.content);
+                });
+                
+                const content = await zip.generateAsync({ type: 'blob' });
+                const url = URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `NFes_${this.getCurrentDateTime()}.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            getJSZip() {
+                // Implementação mínima do JSZip para criar ZIPs simples
+                return function() {
+                    const files = [];
+                    
+                    function JSZip() {
+                        this.files = [];
+                    }
+                    
+                    JSZip.prototype.file = function(name, content) {
+                        this.files.push({ name, content });
+                    };
+                    
+                    JSZip.prototype.generateAsync = function(options) {
+                        return new Promise((resolve) => {
+                            // Criar um ZIP simples
+                            const zipContent = this.createSimpleZip();
+                            resolve(new Blob([zipContent], { type: 'application/zip' }));
+                        });
+                    };
+                    
+                    JSZip.prototype.createSimpleZip = function() {
+                        // Implementação básica de ZIP
+                        let data = [];
+                        
+                        this.files.forEach(file => {
+                            const name = file.name;
+                            const content = file.content;
+                            
+                            // Cabeçalho do arquivo
+                            const header = new Uint8Array(30);
+                            // Preencher cabeçalho básico
+                            data.push(header);
+                            
+                            // Conteúdo
+                            const encoder = new TextEncoder();
+                            const contentData = encoder.encode(content);
+                            data.push(contentData);
+                        });
+                        
+                        // Central directory
+                        const centralDir = new Uint8Array(22);
+                        data.push(centralDir);
+                        
+                        return new Blob(data, { type: 'application/zip' });
+                    };
+                    
+                    return JSZip;
+                }();
+            }
+
+            getCurrentDateTime() {
+                const now = new Date();
+                return `${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}_${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}`;
+            }
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            window.renamer = new NFeRenamer();
+        });
+    </script>
+</body>
+</html>
