@@ -332,6 +332,14 @@
                     <option value="razao_periodo">Razão Social + Período (MM-AAAA)</option>
                     <option value="razao_data">Razão Social + Data Emissão (DD-MM-AAAA)</option>
                     <option value="cnpj_nf">CNPJ + Número NF</option>
+                    <option value="chave_nf">Chave NF-e + Número</option>
+                    <option value="serie_nf">Série + Número NF</option>
+                    <option value="dest_emit">Destinatário + Emitente</option>
+                    <option value="valor_data">Valor Total + Data</option>
+                    <option value="natop_data">Natureza Operação + Data</option>
+                    <option value="uf_numero">UF Destinatário + Número NF</option>
+                    <option value="modelo_serie">Modelo + Série + Número</option>
+                    <option value="tpNF_numero">Tipo NF (Entrada/Saída) + Número</option>
                     <option value="custom" selected>Formato Personalizado</option>
                 </select>
             </div>
@@ -340,9 +348,12 @@
                 <label for="customFormat">Formato personalizado:</label>
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <input type="text" id="customFormat" value="{cnpj}_{ano}{mes}_{nNF}" placeholder="Ex: {cnpj}_{ano}{mes}_{nNF}">
-                    <span class="tooltip" title="Tags disponíveis: {cnpj}, {razao}, {ano}, {mes}, {dia}, {nNF}, {serie}, {chave}">📝</span>
+                    <span class="tooltip" title="Tags disponíveis: {cnpj}, {razao}, {ano}, {mes}, {dia}, {nNF}, {serie}, {chave}, {vNF}, {natOp}, {emitCNPJ}, {emitRazao}, {destUF}, {emitUF}, {mod}, {tpNF}">📝</span>
                 </div>
-                <small style="color: #666; display: block; margin-top: 5px;">Use as tags: {cnpj}, {razao}, {ano}, {mes}, {dia}, {nNF}, {serie}, {chave}</small>
+                <small style="color: #666; display: block; margin-top: 5px;">
+                    Tags: {cnpj}, {razao}, {ano}, {mes}, {dia}, {nNF}, {serie}, {chave}, {vNF}, {natOp}, 
+                    {emitCNPJ}, {emitRazao}, {destUF}, {emitUF}, {mod}, {tpNF}
+                </small>
             </div>
 
             <div class="option-group">
@@ -571,23 +582,41 @@
                            xmlDoc.getElementsByTagName('ide')[0];
                 const infNFe = xmlDoc.getElementsByTagNameNS('*', 'infNFe')[0] || 
                               xmlDoc.getElementsByTagName('infNFe')[0];
+                const total = xmlDoc.getElementsByTagNameNS('*', 'total')[0] || 
+                             xmlDoc.getElementsByTagName('total')[0];
                 
-                // CNPJ
+                // CNPJ Destinatário
                 let cnpj = '';
                 if (dest) {
                     cnpj = getTextNS(dest, 'CNPJ') || getText(dest, 'CNPJ');
                 }
-                if (!cnpj && emit) {
-                    cnpj = getTextNS(emit, 'CNPJ') || getText(emit, 'CNPJ');
-                }
                 
-                // Razão Social
+                // Razão Social Destinatário
                 let razao = '';
                 if (dest) {
                     razao = getTextNS(dest, 'xNome') || getText(dest, 'xNome');
                 }
-                if (!razao && emit) {
-                    razao = getTextNS(emit, 'xNome') || getText(emit, 'xNome');
+
+                // Dados do Emitente
+                let emitCNPJ = '';
+                let emitRazao = '';
+                let emitUF = '';
+                if (emit) {
+                    emitCNPJ = getTextNS(emit, 'CNPJ') || getText(emit, 'CNPJ');
+                    emitRazao = getTextNS(emit, 'xNome') || getText(emit, 'xNome');
+                    const emitEnder = emit.getElementsByTagNameNS('*', 'enderEmit')[0] || emit.getElementsByTagName('enderEmit')[0];
+                    if (emitEnder) {
+                        emitUF = getTextNS(emitEnder, 'UF') || getText(emitEnder, 'UF');
+                    }
+                }
+
+                // UF Destinatário
+                let destUF = '';
+                if (dest) {
+                    const destEnder = dest.getElementsByTagNameNS('*', 'enderDest')[0] || dest.getElementsByTagName('enderDest')[0];
+                    if (destEnder) {
+                        destUF = getTextNS(destEnder, 'UF') || getText(destEnder, 'UF');
+                    }
                 }
 
                 // Data
@@ -609,12 +638,19 @@
                     }
                 }
 
-                // Número NF e Série
+                // Número NF, Série, Modelo, Tipo NF
                 let nNF = '';
                 let serie = '';
+                let mod = '';
+                let tpNF = '';
                 if (ide) {
                     nNF = getTextNS(ide, 'nNF') || getText(ide, 'nNF');
                     serie = getTextNS(ide, 'serie') || getText(ide, 'serie');
+                    mod = getTextNS(ide, 'mod') || getText(ide, 'mod');
+                    tpNF = getTextNS(ide, 'tpNF') || getText(ide, 'tpNF');
+                    // Converte código para texto
+                    if (tpNF === '0') tpNF = 'Entrada';
+                    else if (tpNF === '1') tpNF = 'Saida';
                 }
 
                 // Chave
@@ -626,15 +662,38 @@
                     }
                 }
 
+                // Valor Total da NF
+                let vNF = '';
+                if (total) {
+                    const ICMSTot = total.getElementsByTagNameNS('*', 'ICMSTot')[0] || total.getElementsByTagName('ICMSTot')[0];
+                    if (ICMSTot) {
+                        vNF = getTextNS(ICMSTot, 'vNF') || getText(ICMSTot, 'vNF');
+                    }
+                }
+
+                // Natureza da Operação
+                let natOp = '';
+                if (ide) {
+                    natOp = getTextNS(ide, 'natOp') || getText(ide, 'natOp');
+                }
+
                 return {
                     cnpj: cnpj || 'CNPJ_NAO_ENCONTRADO',
                     razao: this.sanitizeFileName(razao || 'RAZAO_NAO_ENCONTRADA'),
+                    emitCNPJ: emitCNPJ || 'CNPJ_NAO_ENCONTRADO',
+                    emitRazao: this.sanitizeFileName(emitRazao || 'EMITENTE_NAO_ENCONTRADO'),
+                    destUF: destUF || 'UF_NAO_ENCONTRADA',
+                    emitUF: emitUF || 'UF_NAO_ENCONTRADA',
                     ano: ano,
                     mes: mes,
                     dia: dia,
                     nNF: nNF || '000',
                     serie: serie || '000',
-                    chave: chave || 'CHAVE_NAO_ENCONTRADA'
+                    mod: mod || '00',
+                    tpNF: tpNF || '00',
+                    chave: chave || 'CHAVE_NAO_ENCONTRADA',
+                    vNF: vNF || '0000',
+                    natOp: this.sanitizeFileName(natOp || 'NATOP_NAO_ENCONTRADA')
                 };
             }
 
@@ -678,6 +737,38 @@
                         name = `${data.cnpj}${sep}NF${data.nNF}`;
                         break;
                         
+                    case 'chave_nf':
+                        name = `${data.chave.substring(0,8)}${sep}NF${data.nNF}`;
+                        break;
+                        
+                    case 'serie_nf':
+                        name = `S${data.serie}${sep}NF${data.nNF}`;
+                        break;
+                        
+                    case 'dest_emit':
+                        name = `${data.razao}${sep}${data.emitRazao}`;
+                        break;
+                        
+                    case 'valor_data':
+                        name = `R$${data.vNF}${sep}${data.dia}-${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'natop_data':
+                        name = `${data.natOp}${sep}${data.dia}-${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'uf_numero':
+                        name = `${data.destUF}${sep}NF${data.nNF}`;
+                        break;
+                        
+                    case 'modelo_serie':
+                        name = `MOD${data.mod}${sep}SERIE${data.serie}${sep}NF${data.nNF}`;
+                        break;
+                        
+                    case 'tpNF_numero':
+                        name = `${data.tpNF}${sep}NF${data.nNF}`;
+                        break;
+                        
                     case 'custom':
                         name = this.customFormat.value
                             .replace(/{cnpj}/g, data.cnpj)
@@ -687,7 +778,15 @@
                             .replace(/{dia}/g, data.dia)
                             .replace(/{nNF}/g, data.nNF)
                             .replace(/{serie}/g, data.serie)
-                            .replace(/{chave}/g, data.chave);
+                            .replace(/{chave}/g, data.chave)
+                            .replace(/{vNF}/g, data.vNF)
+                            .replace(/{natOp}/g, data.natOp)
+                            .replace(/{emitCNPJ}/g, data.emitCNPJ)
+                            .replace(/{emitRazao}/g, data.emitRazao)
+                            .replace(/{destUF}/g, data.destUF)
+                            .replace(/{emitUF}/g, data.emitUF)
+                            .replace(/{mod}/g, data.mod)
+                            .replace(/{tpNF}/g, data.tpNF);
                         break;
                         
                     default:
@@ -706,8 +805,8 @@
                 item.innerHTML = `
                     <div class="file-info">
                         <div class="file-name">📄 ${this.escapeHtml(result.originalName)}</div>
-                        <div class="file-preview">CNPJ: ${result.data.cnpj}</div>
-                        <div class="file-preview">Razão: ${result.data.razao}</div>
+                        <div class="file-preview">CNPJ Dest: ${result.data.cnpj} | Emitente: ${result.data.emitRazao}</div>
+                        <div class="file-preview">NF: ${result.data.nNF} | Série: ${result.data.serie} | Valor: R$ ${result.data.vNF}</div>
                         <div class="new-name">✨ Novo: ${this.escapeHtml(result.newName)}</div>
                     </div>
                     <div class="file-actions">
@@ -760,7 +859,17 @@
                     this.downloadAllBtn.disabled = true;
                     this.downloadAllBtn.textContent = '⏳ Gerando ZIP...';
                     
-                    await this.createZipAndDownload();
+                    // Criar ZIP manualmente com múltiplos arquivos
+                    const zipContent = await this.createZipContent();
+                    const blob = new Blob([zipContent], { type: 'application/zip' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `NFes_${this.getCurrentDateTime()}.zip`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
                     
                     this.downloadAllBtn.disabled = false;
                     this.downloadAllBtn.textContent = '📥 Baixar Todos Renomeados (ZIP)';
@@ -772,76 +881,186 @@
                 }
             }
 
-            async createZipAndDownload() {
-                // JSZip inline para não depender de CDN
-                const JSZip = this.getJSZip();
+            async createZipContent() {
+                // Criar cabeçalhos ZIP simples para cada arquivo
+                let zipData = [];
                 
-                const zip = new JSZip();
-                
-                this.processedFiles.forEach(result => {
-                    zip.file(result.newName, result.content);
-                });
-                
-                const content = await zip.generateAsync({ type: 'blob' });
-                const url = URL.createObjectURL(content);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `NFes_${this.getCurrentDateTime()}.zip`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }
-
-            getJSZip() {
-                // Implementação mínima do JSZip para criar ZIPs simples
-                return function() {
-                    const files = [];
+                for (let i = 0; i < this.processedFiles.length; i++) {
+                    const result = this.processedFiles[i];
+                    const fileName = result.newName;
+                    const fileContent = result.content;
                     
-                    function JSZip() {
-                        this.files = [];
+                    // Cabeçalho local do arquivo
+                    const encoder = new TextEncoder();
+                    const fileNameBytes = encoder.encode(fileName);
+                    const contentBytes = encoder.encode(fileContent);
+                    
+                    // Local file header (30 bytes + nome do arquivo)
+                    const header = new Uint8Array(30 + fileNameBytes.length);
+                    
+                    // Signature (4 bytes)
+                    header[0] = 0x50; header[1] = 0x4B; header[2] = 0x03; header[3] = 0x04;
+                    
+                    // Version needed to extract (2 bytes)
+                    header[4] = 0x14; header[5] = 0x00;
+                    
+                    // General purpose bit flag (2 bytes)
+                    header[6] = 0x00; header[7] = 0x00;
+                    
+                    // Compression method (2 bytes) - 0 = stored
+                    header[8] = 0x00; header[9] = 0x00;
+                    
+                    // Last mod file time (2 bytes)
+                    header[10] = 0x00; header[11] = 0x00;
+                    
+                    // Last mod file date (2 bytes)
+                    header[12] = 0x00; header[13] = 0x00;
+                    
+                    // CRC-32 (4 bytes) - simplificado
+                    header[14] = 0x00; header[15] = 0x00; header[16] = 0x00; header[17] = 0x00;
+                    
+                    // Compressed size (4 bytes)
+                    const compSize = contentBytes.length;
+                    header[18] = compSize & 0xFF;
+                    header[19] = (compSize >> 8) & 0xFF;
+                    header[20] = (compSize >> 16) & 0xFF;
+                    header[21] = (compSize >> 24) & 0xFF;
+                    
+                    // Uncompressed size (4 bytes)
+                    header[22] = compSize & 0xFF;
+                    header[23] = (compSize >> 8) & 0xFF;
+                    header[24] = (compSize >> 16) & 0xFF;
+                    header[25] = (compSize >> 24) & 0xFF;
+                    
+                    // File name length (2 bytes)
+                    header[26] = fileNameBytes.length & 0xFF;
+                    header[27] = (fileNameBytes.length >> 8) & 0xFF;
+                    
+                    // Extra field length (2 bytes)
+                    header[28] = 0x00; header[29] = 0x00;
+                    
+                    // File name
+                    for (let j = 0; j < fileNameBytes.length; j++) {
+                        header[30 + j] = fileNameBytes[j];
                     }
                     
-                    JSZip.prototype.file = function(name, content) {
-                        this.files.push({ name, content });
-                    };
+                    zipData.push(header);
+                    zipData.push(contentBytes);
+                }
+                
+                // Central directory
+                const centralStart = zipData.reduce((acc, val) => acc + val.length, 0);
+                
+                for (let i = 0; i < this.processedFiles.length; i++) {
+                    const result = this.processedFiles[i];
+                    const fileName = result.newName;
+                    const encoder = new TextEncoder();
+                    const fileNameBytes = encoder.encode(fileName);
                     
-                    JSZip.prototype.generateAsync = function(options) {
-                        return new Promise((resolve) => {
-                            // Criar um ZIP simples
-                            const zipContent = this.createSimpleZip();
-                            resolve(new Blob([zipContent], { type: 'application/zip' }));
-                        });
-                    };
+                    // Central directory header (46 bytes + nome do arquivo)
+                    const centralHeader = new Uint8Array(46 + fileNameBytes.length);
                     
-                    JSZip.prototype.createSimpleZip = function() {
-                        // Implementação básica de ZIP
-                        let data = [];
-                        
-                        this.files.forEach(file => {
-                            const name = file.name;
-                            const content = file.content;
-                            
-                            // Cabeçalho do arquivo
-                            const header = new Uint8Array(30);
-                            // Preencher cabeçalho básico
-                            data.push(header);
-                            
-                            // Conteúdo
-                            const encoder = new TextEncoder();
-                            const contentData = encoder.encode(content);
-                            data.push(contentData);
-                        });
-                        
-                        // Central directory
-                        const centralDir = new Uint8Array(22);
-                        data.push(centralDir);
-                        
-                        return new Blob(data, { type: 'application/zip' });
-                    };
+                    // Signature (4 bytes)
+                    centralHeader[0] = 0x50; centralHeader[1] = 0x4B; centralHeader[2] = 0x01; centralHeader[3] = 0x02;
                     
-                    return JSZip;
-                }();
+                    // Version made by (2 bytes)
+                    centralHeader[4] = 0x14; centralHeader[5] = 0x00;
+                    
+                    // Version needed to extract (2 bytes)
+                    centralHeader[6] = 0x14; centralHeader[7] = 0x00;
+                    
+                    // General purpose bit flag (2 bytes)
+                    centralHeader[8] = 0x00; centralHeader[9] = 0x00;
+                    
+                    // Compression method (2 bytes)
+                    centralHeader[10] = 0x00; centralHeader[11] = 0x00;
+                    
+                    // Last mod file time (2 bytes)
+                    centralHeader[12] = 0x00; centralHeader[13] = 0x00;
+                    
+                    // Last mod file date (2 bytes)
+                    centralHeader[14] = 0x00; centralHeader[15] = 0x00;
+                    
+                    // CRC-32 (4 bytes)
+                    centralHeader[16] = 0x00; centralHeader[17] = 0x00; centralHeader[18] = 0x00; centralHeader[19] = 0x00;
+                    
+                    // Compressed size (4 bytes)
+                    const compSize = encoder.encode(result.content).length;
+                    centralHeader[20] = compSize & 0xFF;
+                    centralHeader[21] = (compSize >> 8) & 0xFF;
+                    centralHeader[22] = (compSize >> 16) & 0xFF;
+                    centralHeader[23] = (compSize >> 24) & 0xFF;
+                    
+                    // Uncompressed size (4 bytes)
+                    centralHeader[24] = compSize & 0xFF;
+                    centralHeader[25] = (compSize >> 8) & 0xFF;
+                    centralHeader[26] = (compSize >> 16) & 0xFF;
+                    centralHeader[27] = (compSize >> 24) & 0xFF;
+                    
+                    // File name length (2 bytes)
+                    centralHeader[28] = fileNameBytes.length & 0xFF;
+                    centralHeader[29] = (fileNameBytes.length >> 8) & 0xFF;
+                    
+                    // Extra field length (2 bytes)
+                    centralHeader[30] = 0x00; centralHeader[31] = 0x00;
+                    
+                    // File comment length (2 bytes)
+                    centralHeader[32] = 0x00; centralHeader[33] = 0x00;
+                    
+                    // Disk number start (2 bytes)
+                    centralHeader[34] = 0x00; centralHeader[35] = 0x00;
+                    
+                    // Internal file attributes (2 bytes)
+                    centralHeader[36] = 0x00; centralHeader[37] = 0x00;
+                    
+                    // External file attributes (4 bytes)
+                    centralHeader[38] = 0x00; centralHeader[39] = 0x00; centralHeader[40] = 0x00; centralHeader[41] = 0x00;
+                    
+                    // Relative offset of local header (4 bytes)
+                    const offset = i === 0 ? 0 : zipData.slice(0, i).reduce((acc, val) => acc + val.length, 0);
+                    centralHeader[42] = offset & 0xFF;
+                    centralHeader[43] = (offset >> 8) & 0xFF;
+                    centralHeader[44] = (offset >> 16) & 0xFF;
+                    centralHeader[45] = (offset >> 24) & 0xFF;
+                    
+                    // File name
+                    for (let j = 0; j < fileNameBytes.length; j++) {
+                        centralHeader[46 + j] = fileNameBytes[j];
+                    }
+                    
+                    zipData.push(centralHeader);
+                }
+                
+                // End of central directory record (22 bytes)
+                const endHeader = new Uint8Array(22);
+                endHeader[0] = 0x50; endHeader[1] = 0x4B; endHeader[2] = 0x05; endHeader[3] = 0x06;
+                endHeader[4] = 0x00; endHeader[5] = 0x00; // Number of this disk
+                endHeader[6] = 0x00; endHeader[7] = 0x00; // Disk where central directory starts
+                endHeader[8] = this.processedFiles.length & 0xFF; // Number of central directory records on this disk
+                endHeader[9] = (this.processedFiles.length >> 8) & 0xFF;
+                endHeader[10] = this.processedFiles.length & 0xFF; // Total number of central directory records
+                endHeader[11] = (this.processedFiles.length >> 8) & 0xFF;
+                
+                // Size of central directory
+                const centralSize = zipData.slice(this.processedFiles.length).reduce((acc, val) => acc + val.length, 0);
+                endHeader[12] = centralSize & 0xFF;
+                endHeader[13] = (centralSize >> 8) & 0xFF;
+                endHeader[14] = (centralSize >> 16) & 0xFF;
+                endHeader[15] = (centralSize >> 24) & 0xFF;
+                
+                // Offset of start of central directory with respect to the starting disk number
+                const centralOffset = zipData.slice(0, this.processedFiles.length).reduce((acc, val) => acc + val.length, 0);
+                endHeader[16] = centralOffset & 0xFF;
+                endHeader[17] = (centralOffset >> 8) & 0xFF;
+                endHeader[18] = (centralOffset >> 16) & 0xFF;
+                endHeader[19] = (centralOffset >> 24) & 0xFF;
+                
+                // Comment length (2 bytes)
+                endHeader[20] = 0x00; endHeader[21] = 0x00;
+                
+                zipData.push(endHeader);
+                
+                return new Blob(zipData);
             }
 
             getCurrentDateTime() {
