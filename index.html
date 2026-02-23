@@ -135,6 +135,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .preview-btn {
@@ -148,6 +149,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: opacity 0.3s;
+            min-width: 200px;
         }
 
         .excel-btn {
@@ -161,6 +163,65 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
+            min-width: 150px;
+        }
+
+        .download-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .download-zip-btn {
+            flex: 1;
+            padding: 15px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            min-width: 200px;
+        }
+
+        .download-auto-btn {
+            flex: 1;
+            padding: 15px;
+            background: #ffc107;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            min-width: 200px;
+        }
+
+        .download-auto-btn:hover {
+            background: #e0a800;
+        }
+
+        .download-auto-btn.active {
+            background: #28a745;
+            color: white;
+        }
+
+        .download-auto-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .download-zip-btn:hover {
+            background: #138496;
+        }
+
+        .download-zip-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .excel-btn:hover {
@@ -172,11 +233,11 @@
             cursor: not-allowed;
         }
 
-        .preview-btn:hover, .excel-btn:hover {
+        .preview-btn:hover {
             opacity: 0.9;
         }
 
-        .preview-btn:disabled, .excel-btn:disabled {
+        .preview-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
@@ -348,6 +409,11 @@
             color: #333;
         }
 
+        .badge-info {
+            background: #17a2b8;
+            color: white;
+        }
+
         .stats {
             display: flex;
             gap: 20px;
@@ -416,6 +482,16 @@
             border-left: 4px solid #ffc107;
         }
 
+        .download-note {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-bottom: 10px;
+            border-left: 4px solid #17a2b8;
+        }
+
         .filter-container {
             display: flex;
             gap: 10px;
@@ -444,6 +520,41 @@
         .virtual-scroll {
             height: 400px;
             overflow-y: auto;
+        }
+
+        .auto-download-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 5px;
+        }
+
+        .delay-input {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .stop-btn {
+            padding: 8px 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .stop-btn:hover {
+            background: #c82333;
+        }
+
+        .stop-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -531,6 +642,10 @@
                 <div class="stat-value" id="processingSpeed">0</div>
                 <div class="stat-label">Arq/seg</div>
             </div>
+            <div class="stat-item">
+                <div class="stat-value" id="downloadedCount">0</div>
+                <div class="stat-label">Baixados</div>
+            </div>
         </div>
 
         <div id="progressContainer" class="progress-container">
@@ -543,6 +658,22 @@
         <div class="action-buttons">
             <button class="preview-btn" id="previewBtn" disabled>👁️ Visualizar Renomeação</button>
             <button class="excel-btn" id="excelBtn" disabled>📊 Relatório Excel</button>
+        </div>
+
+        <div id="autoDownloadControls" class="auto-download-controls" style="display: none;">
+            <span style="font-weight: 500;">⏬ Download Automático:</span>
+            <input type="number" id="downloadDelay" class="delay-input" value="1" min="0.1" max="10" step="0.1">
+            <span>segundos entre arquivos</span>
+            <button class="stop-btn" id="stopAutoDownload" disabled>⏹️ Parar</button>
+        </div>
+
+        <div class="download-options">
+            <button class="download-zip-btn" id="downloadAllBtn" disabled>📦 Baixar Todos (ZIP)</button>
+            <button class="download-auto-btn" id="downloadAutoBtn" disabled>⏬ Download Automático Individual</button>
+        </div>
+
+        <div id="downloadNote" class="download-note" style="display: none;">
+            ⬇️ O download automático vai baixar cada arquivo individualmente. O navegador pode perguntar sobre múltiplos downloads - permita para continuar.
         </div>
 
         <div id="excelNote" class="excel-note" style="display: none;">
@@ -558,8 +689,6 @@
         <div id="fileListContainer" style="display: none;">
             <h3>📋 Arquivos Processados <span id="fileCount" style="font-size: 14px; color: #666;"></span></h3>
             <div class="file-list-container" id="fileList"></div>
-            
-            <button class="download-all-btn" id="downloadAllBtn" disabled>📥 Baixar Todos Renomeados (ZIP)</button>
         </div>
 
         <div class="footer">
@@ -573,8 +702,11 @@
                 this.files = [];
                 this.processedFiles = [];
                 this.isProcessing = false;
+                this.isAutoDownloading = false;
+                this.autoDownloadInterval = null;
                 this.startTime = 0;
                 this.filteredIndices = [];
+                this.downloadedCount = 0;
                 
                 this.initElements();
                 this.initEventListeners();
@@ -591,9 +723,14 @@
                 this.previewBtn = document.getElementById('previewBtn');
                 this.excelBtn = document.getElementById('excelBtn');
                 this.excelNote = document.getElementById('excelNote');
+                this.downloadNote = document.getElementById('downloadNote');
                 this.fileListContainer = document.getElementById('fileListContainer');
                 this.fileList = document.getElementById('fileList');
                 this.downloadAllBtn = document.getElementById('downloadAllBtn');
+                this.downloadAutoBtn = document.getElementById('downloadAutoBtn');
+                this.autoDownloadControls = document.getElementById('autoDownloadControls');
+                this.downloadDelay = document.getElementById('downloadDelay');
+                this.stopAutoDownloadBtn = document.getElementById('stopAutoDownload');
                 this.statsContainer = document.getElementById('statsContainer');
                 this.progressContainer = document.getElementById('progressContainer');
                 this.progressFill = document.getElementById('progressFill');
@@ -602,6 +739,7 @@
                 this.successFilesEl = document.getElementById('successFiles');
                 this.errorFilesEl = document.getElementById('errorFiles');
                 this.processingSpeed = document.getElementById('processingSpeed');
+                this.downloadedCountEl = document.getElementById('downloadedCount');
                 this.filterContainer = document.getElementById('filterContainer');
                 this.filterInput = document.getElementById('filterInput');
                 this.clearFilterBtn = document.getElementById('clearFilterBtn');
@@ -641,6 +779,8 @@
                 this.previewBtn.addEventListener('click', () => this.previewRenaming());
                 this.excelBtn.addEventListener('click', () => this.generateExcelReport());
                 this.downloadAllBtn.addEventListener('click', () => this.downloadAll());
+                this.downloadAutoBtn.addEventListener('click', () => this.startAutoDownload());
+                this.stopAutoDownloadBtn.addEventListener('click', () => this.stopAutoDownload());
                 
                 this.filterInput.addEventListener('input', () => this.filterFiles());
                 this.clearFilterBtn.addEventListener('click', () => {
@@ -672,6 +812,8 @@
                 this.successFilesEl.textContent = '0';
                 this.errorFilesEl.textContent = '0';
                 this.processingSpeed.textContent = '0';
+                this.downloadedCount = 0;
+                this.downloadedCountEl.textContent = '0';
                 
                 this.showSelectedFiles();
             }
@@ -793,12 +935,15 @@
                 
                 this.progressContainer.style.display = 'none';
                 this.downloadAllBtn.disabled = this.processedFiles.length === 0;
+                this.downloadAutoBtn.disabled = this.processedFiles.length === 0;
                 this.excelBtn.disabled = this.processedFiles.length === 0;
                 this.previewBtn.disabled = false;
                 this.isProcessing = false;
                 
                 if (this.processedFiles.length > 0) {
                     this.excelNote.style.display = 'block';
+                    this.downloadNote.style.display = 'block';
+                    this.autoDownloadControls.style.display = 'flex';
                 }
                 
                 this.filterInput.disabled = false;
@@ -814,6 +959,7 @@
                 item.dataset.filename = result.originalName.toLowerCase();
                 item.dataset.cnpj = result.data.cnpj;
                 item.dataset.nf = result.data.nNF;
+                item.dataset.downloaded = 'false';
                 
                 item.innerHTML = `
                     <div class="file-info">
@@ -825,11 +971,12 @@
                     </div>
                     <div class="file-actions">
                         <button class="download-btn" data-index="${index}">📥 Baixar</button>
+                        <span class="badge badge-secondary download-status" style="display: none;">⏳</span>
                     </div>
                 `;
                 
                 const btn = item.querySelector('.download-btn');
-                btn.addEventListener('click', () => this.downloadSingle(result));
+                btn.addEventListener('click', () => this.downloadSingle(result, item));
                 
                 this.fileList.appendChild(item);
             }
@@ -1323,7 +1470,7 @@
                 this.fileList.appendChild(item);
             }
 
-            downloadSingle(result) {
+            downloadSingle(result, itemElement = null) {
                 const blob = new Blob([result.content], { type: 'application/xml' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -1333,6 +1480,104 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+                
+                // Atualizar contador e badge
+                this.downloadedCount++;
+                this.downloadedCountEl.textContent = this.downloadedCount;
+                
+                if (itemElement) {
+                    const statusBadge = itemElement.querySelector('.download-status');
+                    if (statusBadge) {
+                        statusBadge.style.display = 'inline-block';
+                        statusBadge.textContent = '✅ Baixado';
+                        statusBadge.className = 'badge badge-success download-status';
+                    }
+                    
+                    const downloadBtn = itemElement.querySelector('.download-btn');
+                    if (downloadBtn) {
+                        downloadBtn.disabled = true;
+                        downloadBtn.style.opacity = '0.5';
+                    }
+                    
+                    itemElement.dataset.downloaded = 'true';
+                }
+            }
+
+            startAutoDownload() {
+                if (this.isAutoDownloading || this.processedFiles.length === 0) return;
+                
+                // Verificar permissão para múltiplos downloads
+                if (this.processedFiles.length > 3) {
+                    alert('O navegador pode perguntar sobre permissão para múltiplos downloads. Clique em "Permitir" para continuar.');
+                }
+                
+                this.isAutoDownloading = true;
+                this.downloadAutoBtn.textContent = '⏳ Baixando...';
+                this.downloadAutoBtn.disabled = true;
+                this.stopAutoDownloadBtn.disabled = false;
+                
+                const delay = parseFloat(this.downloadDelay.value) * 1000;
+                let currentIndex = 0;
+                
+                // Encontrar primeiro não baixado
+                while (currentIndex < this.processedFiles.length) {
+                    const item = this.findItemByIndex(currentIndex);
+                    if (!item || item.dataset.downloaded !== 'true') {
+                        break;
+                    }
+                    currentIndex++;
+                }
+                
+                this.autoDownloadInterval = setInterval(() => {
+                    if (currentIndex >= this.processedFiles.length) {
+                        this.stopAutoDownload();
+                        alert('✅ Todos os arquivos foram baixados!');
+                        return;
+                    }
+                    
+                    const result = this.processedFiles[currentIndex];
+                    const item = this.findItemByIndex(currentIndex);
+                    
+                    if (item && item.dataset.downloaded !== 'true') {
+                        this.downloadSingle(result, item);
+                        currentIndex++;
+                        
+                        // Pular já baixados
+                        while (currentIndex < this.processedFiles.length) {
+                            const nextItem = this.findItemByIndex(currentIndex);
+                            if (!nextItem || nextItem.dataset.downloaded !== 'true') {
+                                break;
+                            }
+                            currentIndex++;
+                        }
+                        
+                        this.progressText.textContent = `Download automático: ${this.downloadedCount} de ${this.processedFiles.length} arquivos`;
+                    } else {
+                        currentIndex++;
+                    }
+                }, delay);
+            }
+
+            findItemByIndex(index) {
+                const items = this.fileList.querySelectorAll('.file-item');
+                for (let item of items) {
+                    if (item.dataset.index == index) {
+                        return item;
+                    }
+                }
+                return null;
+            }
+
+            stopAutoDownload() {
+                if (this.autoDownloadInterval) {
+                    clearInterval(this.autoDownloadInterval);
+                    this.autoDownloadInterval = null;
+                }
+                
+                this.isAutoDownloading = false;
+                this.downloadAutoBtn.textContent = '⏬ Download Automático Individual';
+                this.downloadAutoBtn.disabled = false;
+                this.stopAutoDownloadBtn.disabled = true;
             }
 
             async downloadAll() {
@@ -1386,13 +1631,13 @@
                     
                     this.progressContainer.style.display = 'none';
                     this.downloadAllBtn.disabled = false;
-                    this.downloadAllBtn.textContent = '📥 Baixar Todos Renomeados (ZIP)';
+                    this.downloadAllBtn.textContent = '📦 Baixar Todos (ZIP)';
                 } catch (error) {
                     console.error(error);
-                    alert('Erro ao criar ZIP. Baixando individualmente...');
-                    this.downloadAllIndividual();
+                    alert('Erro ao criar ZIP. Usando download automático individual...');
+                    this.startAutoDownload();
                     this.downloadAllBtn.disabled = false;
-                    this.downloadAllBtn.textContent = '📥 Baixar Todos Renomeados (ZIP)';
+                    this.downloadAllBtn.textContent = '📦 Baixar Todos (ZIP)';
                 }
             }
 
@@ -1404,19 +1649,6 @@
                     script.onerror = reject;
                     document.head.appendChild(script);
                 });
-            }
-
-            downloadAllIndividual() {
-                // Baixar um por um com delay
-                let i = 0;
-                const downloadNext = () => {
-                    if (i < this.processedFiles.length) {
-                        this.downloadSingle(this.processedFiles[i]);
-                        i++;
-                        setTimeout(downloadNext, 500);
-                    }
-                };
-                downloadNext();
             }
 
             getCurrentDateTime() {
