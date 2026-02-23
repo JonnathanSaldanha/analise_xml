@@ -578,22 +578,42 @@
             
             <div class="option-group">
                 <label for="formatSelect">Formato do nome:</label>
-                <select id="formatSelect">
-                    <option value="cnpj_periodo">CNPJ Destinatário + Período (MM-AAAA)</option>
-                    <option value="cnpj_data">CNPJ Destinatário + Data Emissão (DD-MM-AAAA)</option>
-                    <option value="razao_periodo">Razão Social + Período (MM-AAAA)</option>
-                    <option value="razao_data">Razão Social + Data Emissão (DD-MM-AAAA)</option>
-                    <option value="cnpj_nf">CNPJ + Número NF</option>
-                    <option value="chave_nf">Chave NF-e + Número</option>
-                    <option value="serie_nf">Série + Número NF</option>
-                    <option value="dest_emit">Destinatário + Emitente</option>
-                    <option value="valor_data">Valor Total + Data</option>
-                    <option value="natop_data">Natureza Operação + Data</option>
-                    <option value="uf_numero">UF Destinatário + Número NF</option>
-                    <option value="modelo_serie">Modelo + Série + Número</option>
-                    <option value="tpNF_numero">Tipo NF (Entrada/Saída) + Número</option>
-                    <option value="custom" selected>Formato Personalizado</option>
+                <select id="formatSelect" size="10" style="height: auto;">
+                    <optgroup label="DESTINATÁRIO">
+                        <option value="cnpj_periodo">CNPJ Destinatário + Período (MM-AAAA)</option>
+                        <option value="cnpj_data">CNPJ Destinatário + Data Emissão (DD-MM-AAAA)</option>
+                        <option value="razao_periodo">Razão Social Destinatário + Período (MM-AAAA)</option>
+                        <option value="razao_data">Razão Social Destinatário + Data Emissão (DD-MM-AAAA)</option>
+                        <option value="cnpj_nf">CNPJ Destinatário + Número NF</option>
+                        <option value="dest_uf_numero">UF Destinatário + Número NF</option>
+                    </optgroup>
+                    
+                    <optgroup label="EMITENTE">
+                        <option value="emit_cnpj_periodo">CNPJ Emitente + Período (MM-AAAA)</option>
+                        <option value="emit_cnpj_data">CNPJ Emitente + Data Emissão (DD-MM-AAAA)</option>
+                        <option value="emit_razao_periodo">Razão Social Emitente + Período (MM-AAAA)</option>
+                        <option value="emit_razao_data">Razão Social Emitente + Data Emissão (DD-MM-AAAA)</option>
+                        <option value="emit_cnpj_nf">CNPJ Emitente + Número NF</option>
+                        <option value="emit_uf_numero">UF Emitente + Número NF</option>
+                    </optgroup>
+                    
+                    <optgroup label="COMBINADO (DESTINATÁRIO + EMITENTE)">
+                        <option value="dest_emit">Destinatário + Emitente</option>
+                        <option value="cnpj_dest_emit">CNPJ Destinatário + CNPJ Emitente</option>
+                        <option value="razao_dest_emit">Razão Destinatário + Razão Emitente</option>
+                    </optgroup>
+                    
+                    <optgroup label="OUTROS">
+                        <option value="chave_nf">Chave NF-e + Número</option>
+                        <option value="serie_nf">Série + Número NF</option>
+                        <option value="valor_data">Valor Total + Data</option>
+                        <option value="natop_data">Natureza Operação + Data</option>
+                        <option value="modelo_serie">Modelo + Série + Número</option>
+                        <option value="tpNF_numero">Tipo NF (Entrada/Saída) + Número</option>
+                        <option value="custom" selected>Formato Personalizado</option>
+                    </optgroup>
                 </select>
+                <small style="color: #666;">Use Ctrl+Clique para selecionar (ou clique normalmente)</small>
             </div>
 
             <div class="option-group" id="customFormatGroup">
@@ -965,7 +985,7 @@
                     <div class="file-info">
                         <div class="file-name">📄 ${this.escapeHtml(result.originalName)}</div>
                         <div class="file-preview">CNPJ Dest: ${result.data.cnpj} | ${result.data.razao.replace(/_/g, ' ')}</div>
-                        <div class="file-preview">Emitente: ${result.data.emitRazao.replace(/_/g, ' ')}</div>
+                        <div class="file-preview">CNPJ Emit: ${result.data.emitCNPJ} | ${result.data.emitRazao.replace(/_/g, ' ')}</div>
                         <div class="file-preview">NF: ${result.data.nNF} | Série: ${result.data.serie} | Valor: R$ ${parseFloat(result.data.vNF).toFixed(2)}</div>
                         <div class="new-name">✨ Novo: ${this.escapeHtml(result.newName)}</div>
                     </div>
@@ -1232,6 +1252,7 @@
                 let name = '';
                 
                 switch(format) {
+                    // Destinatário
                     case 'cnpj_periodo':
                         name = `${data.cnpj}${sep}${data.mes}-${data.ano}`;
                         break;
@@ -1252,6 +1273,49 @@
                         name = `${data.cnpj}${sep}NF${data.nNF}`;
                         break;
                         
+                    case 'dest_uf_numero':
+                        name = `${data.destUF}${sep}NF${data.nNF}`;
+                        break;
+                    
+                    // Emitente
+                    case 'emit_cnpj_periodo':
+                        name = `${data.emitCNPJ}${sep}${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'emit_cnpj_data':
+                        name = `${data.emitCNPJ}${sep}${data.dia}-${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'emit_razao_periodo':
+                        name = `${data.emitRazao}${sep}${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'emit_razao_data':
+                        name = `${data.emitRazao}${sep}${data.dia}-${data.mes}-${data.ano}`;
+                        break;
+                        
+                    case 'emit_cnpj_nf':
+                        name = `${data.emitCNPJ}${sep}NF${data.nNF}`;
+                        break;
+                        
+                    case 'emit_uf_numero':
+                        name = `${data.emitUF}${sep}NF${data.nNF}`;
+                        break;
+                    
+                    // Combinado
+                    case 'dest_emit':
+                        name = `${data.razao}${sep}${data.emitRazao}`;
+                        break;
+                        
+                    case 'cnpj_dest_emit':
+                        name = `${data.cnpj}${sep}${data.emitCNPJ}`;
+                        break;
+                        
+                    case 'razao_dest_emit':
+                        name = `${data.razao}${sep}${data.emitRazao}`;
+                        break;
+                    
+                    // Outros
                     case 'chave_nf':
                         name = `${data.chave.substring(0,8)}${sep}NF${data.nNF}`;
                         break;
@@ -1260,20 +1324,12 @@
                         name = `S${data.serie}${sep}NF${data.nNF}`;
                         break;
                         
-                    case 'dest_emit':
-                        name = `${data.razao}${sep}${data.emitRazao}`;
-                        break;
-                        
                     case 'valor_data':
                         name = `R$${parseFloat(data.vNF).toFixed(2)}${sep}${data.dia}-${data.mes}-${data.ano}`;
                         break;
                         
                     case 'natop_data':
                         name = `${data.natOp}${sep}${data.dia}-${data.mes}-${data.ano}`;
-                        break;
-                        
-                    case 'uf_numero':
-                        name = `${data.destUF}${sep}NF${data.nNF}`;
                         break;
                         
                     case 'modelo_serie':
