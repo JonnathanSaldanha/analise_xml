@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renomeador de XML NF-e - Jonnathan Saldanha</title>
+    <title>Renomeador de XML NF-e</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 10px;
@@ -39,16 +39,6 @@
         h1 {
             color: #333;
             font-size: 28px;
-        }
-
-        .developer {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 16px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .subtitle {
@@ -191,8 +181,44 @@
             cursor: not-allowed;
         }
 
+        .progress-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
         .file-list-container {
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
             border: 1px solid #eee;
             border-radius: 5px;
@@ -204,10 +230,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
             background: white;
             transition: background 0.3s;
+            font-size: 13px;
         }
 
         .file-item:hover {
@@ -225,20 +252,20 @@
         .file-name {
             font-weight: 500;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             word-break: break-all;
         }
 
         .file-preview {
-            font-size: 12px;
+            font-size: 11px;
             color: #666;
-            margin: 2px 0;
+            margin: 1px 0;
         }
 
         .new-name {
-            font-size: 13px;
+            font-size: 12px;
             color: #28a745;
-            margin-top: 5px;
+            margin-top: 3px;
             word-break: break-all;
             font-weight: 500;
         }
@@ -249,13 +276,13 @@
         }
 
         .download-btn {
-            padding: 8px 20px;
+            padding: 5px 15px;
             background: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             transition: background 0.3s;
         }
 
@@ -288,21 +315,21 @@
 
         .error {
             color: #dc3545;
-            font-size: 13px;
-            margin-top: 5px;
+            font-size: 12px;
+            margin-top: 3px;
         }
 
         .success {
             color: #28a745;
-            font-size: 13px;
-            margin-top: 5px;
+            font-size: 12px;
+            margin-top: 3px;
         }
 
         .badge {
             display: inline-block;
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 3px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: normal;
         }
 
@@ -316,6 +343,11 @@
             color: white;
         }
 
+        .badge-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
         .stats {
             display: flex;
             gap: 20px;
@@ -323,10 +355,12 @@
             padding: 15px;
             background: #e8f4fd;
             border-radius: 5px;
+            flex-wrap: wrap;
         }
 
         .stat-item {
             flex: 1;
+            min-width: 100px;
             text-align: center;
         }
 
@@ -381,13 +415,42 @@
             margin-bottom: 10px;
             border-left: 4px solid #ffc107;
         }
+
+        .filter-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .filter-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .virtual-scroll {
+            height: 400px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📄 Renomeador de XML NF-e</h1>
-            <div class="developer">👨‍💻 Jonnathan Saldanha</div>
         </div>
         
         <p class="subtitle">Ferramenta profissional para renomeação e extração de dados de XML NF-e</p>
@@ -395,7 +458,7 @@
         <div class="upload-area" id="uploadArea">
             <i>📂</i>
             <p>Arraste e solte arquivos XML aqui ou clique para selecionar</p>
-            <small>Suporta múltiplos arquivos (até 50 por vez)</small>
+            <small>Suporta milhares de arquivos (processamento em lote)</small>
             <input type="file" id="fileInput" class="file-input" multiple accept=".xml">
         </div>
 
@@ -438,6 +501,17 @@
                 <label for="separator">Separador:</label>
                 <input type="text" id="separator" value="_" maxlength="5" placeholder="_">
             </div>
+
+            <div class="option-group">
+                <label for="batchSize">Processamento em lote:</label>
+                <select id="batchSize">
+                    <option value="50">50 arquivos por vez (recomendado)</option>
+                    <option value="100">100 arquivos por vez</option>
+                    <option value="200">200 arquivos por vez</option>
+                    <option value="500">500 arquivos por vez (pode ser lento)</option>
+                </select>
+                <small style="color: #666;">Para muitos arquivos, processamos em lotes para não travar o navegador</small>
+            </div>
         </div>
 
         <div id="statsContainer" style="display: none;" class="stats">
@@ -453,6 +527,17 @@
                 <div class="stat-value" id="errorFiles">0</div>
                 <div class="stat-label">Erros</div>
             </div>
+            <div class="stat-item">
+                <div class="stat-value" id="processingSpeed">0</div>
+                <div class="stat-label">Arq/seg</div>
+            </div>
+        </div>
+
+        <div id="progressContainer" class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div class="progress-text" id="progressText">Iniciando processamento...</div>
         </div>
 
         <div class="action-buttons">
@@ -465,16 +550,20 @@
             Valores, Datas, Números, Séries e muito mais!
         </div>
 
+        <div id="filterContainer" class="filter-container" style="display: none;">
+            <input type="text" id="filterInput" class="filter-input" placeholder="Filtrar por nome, CNPJ, NF...">
+            <button class="filter-btn" id="clearFilterBtn">Limpar</button>
+        </div>
+
         <div id="fileListContainer" style="display: none;">
-            <h3>📋 Arquivos Processados</h3>
+            <h3>📋 Arquivos Processados <span id="fileCount" style="font-size: 14px; color: #666;"></span></h3>
             <div class="file-list-container" id="fileList"></div>
             
             <button class="download-all-btn" id="downloadAllBtn" disabled>📥 Baixar Todos Renomeados (ZIP)</button>
         </div>
 
         <div class="footer">
-            Desenvolvido por <strong>Jonnathan Saldanha</strong> © 2024 - Todos os direitos reservados<br>
-            <small style="color: #999;">Versão 2.0 - Com relatório Excel detalhado</small>
+            Desenvolvido por Jonnathan Saldanha
         </div>
     </div>
 
@@ -483,6 +572,9 @@
             constructor() {
                 this.files = [];
                 this.processedFiles = [];
+                this.isProcessing = false;
+                this.startTime = 0;
+                this.filteredIndices = [];
                 
                 this.initElements();
                 this.initEventListeners();
@@ -495,6 +587,7 @@
                 this.customFormatGroup = document.getElementById('customFormatGroup');
                 this.customFormat = document.getElementById('customFormat');
                 this.separator = document.getElementById('separator');
+                this.batchSize = document.getElementById('batchSize');
                 this.previewBtn = document.getElementById('previewBtn');
                 this.excelBtn = document.getElementById('excelBtn');
                 this.excelNote = document.getElementById('excelNote');
@@ -502,9 +595,17 @@
                 this.fileList = document.getElementById('fileList');
                 this.downloadAllBtn = document.getElementById('downloadAllBtn');
                 this.statsContainer = document.getElementById('statsContainer');
+                this.progressContainer = document.getElementById('progressContainer');
+                this.progressFill = document.getElementById('progressFill');
+                this.progressText = document.getElementById('progressText');
                 this.totalFilesEl = document.getElementById('totalFiles');
                 this.successFilesEl = document.getElementById('successFiles');
                 this.errorFilesEl = document.getElementById('errorFiles');
+                this.processingSpeed = document.getElementById('processingSpeed');
+                this.filterContainer = document.getElementById('filterContainer');
+                this.filterInput = document.getElementById('filterInput');
+                this.clearFilterBtn = document.getElementById('clearFilterBtn');
+                this.fileCount = document.getElementById('fileCount');
             }
 
             initEventListeners() {
@@ -540,6 +641,12 @@
                 this.previewBtn.addEventListener('click', () => this.previewRenaming());
                 this.excelBtn.addEventListener('click', () => this.generateExcelReport());
                 this.downloadAllBtn.addEventListener('click', () => this.downloadAll());
+                
+                this.filterInput.addEventListener('input', () => this.filterFiles());
+                this.clearFilterBtn.addEventListener('click', () => {
+                    this.filterInput.value = '';
+                    this.filterFiles();
+                });
             }
 
             handleFiles(fileList) {
@@ -552,40 +659,76 @@
                     return;
                 }
 
-                if (xmlFiles.length > 50) {
-                    alert('Muitos arquivos! Processando os primeiros 50 para melhor performance.');
-                    this.files = xmlFiles.slice(0, 50);
-                } else {
-                    this.files = xmlFiles;
+                if (xmlFiles.length > 10000) {
+                    if (!confirm(`Você selecionou ${xmlFiles.length} arquivos. Isso pode levar alguns minutos. Deseja continuar?`)) {
+                        return;
+                    }
                 }
 
+                this.files = xmlFiles;
                 this.previewBtn.disabled = false;
                 this.statsContainer.style.display = 'flex';
                 this.totalFilesEl.textContent = this.files.length;
                 this.successFilesEl.textContent = '0';
                 this.errorFilesEl.textContent = '0';
+                this.processingSpeed.textContent = '0';
                 
                 this.showSelectedFiles();
             }
 
             showSelectedFiles() {
                 this.fileListContainer.style.display = 'block';
+                this.filterContainer.style.display = 'flex';
                 this.fileList.innerHTML = '';
                 
-                this.files.forEach(file => {
-                    const item = document.createElement('div');
-                    item.className = 'file-item';
-                    item.innerHTML = `
+                // Mostrar apenas os primeiros 100 arquivos para não travar
+                const previewCount = Math.min(this.files.length, 100);
+                for (let i = 0; i < previewCount; i++) {
+                    this.addFileToList(this.files[i], i);
+                }
+                
+                if (this.files.length > 100) {
+                    const more = document.createElement('div');
+                    more.className = 'file-item';
+                    more.innerHTML = `
                         <div class="file-info">
-                            <div class="file-name">📄 ${this.escapeHtml(file.name)}</div>
-                            <div class="file-preview">Tamanho: ${(file.size / 1024).toFixed(2)} KB</div>
-                            <div class="file-preview">Aguardando processamento...</div>
-                        </div>
-                        <div class="file-actions">
-                            <span class="badge badge-secondary">⏳ Aguardando</span>
+                            <div class="file-name">📄 ... e mais ${this.files.length - 100} arquivos</div>
+                            <div class="file-preview">Clique em "Visualizar Renomeação" para processar todos</div>
                         </div>
                     `;
-                    this.fileList.appendChild(item);
+                    this.fileList.appendChild(more);
+                }
+                
+                this.fileCount.textContent = `(mostrando 100 de ${this.files.length})`;
+            }
+
+            addFileToList(file, index) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.dataset.index = index;
+                item.dataset.filename = file.name.toLowerCase();
+                item.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-name">📄 ${this.escapeHtml(file.name)}</div>
+                        <div class="file-preview">Tamanho: ${(file.size / 1024).toFixed(2)} KB</div>
+                        <div class="file-preview">Aguardando processamento...</div>
+                    </div>
+                    <div class="file-actions">
+                        <span class="badge badge-secondary">⏳ Aguardando</span>
+                    </div>
+                `;
+                this.fileList.appendChild(item);
+            }
+
+            filterFiles() {
+                const filterText = this.filterInput.value.toLowerCase();
+                const items = this.fileList.querySelectorAll('.file-item');
+                
+                items.forEach(item => {
+                    if (item.dataset.filename) {
+                        const matches = filterText === '' || item.dataset.filename.includes(filterText);
+                        item.style.display = matches ? 'flex' : 'none';
+                    }
                 });
             }
 
@@ -596,32 +739,99 @@
             }
 
             async previewRenaming() {
+                if (this.isProcessing) return;
+                
+                this.isProcessing = true;
+                this.previewBtn.disabled = true;
                 this.processedFiles = [];
                 this.fileList.innerHTML = '';
+                this.progressContainer.style.display = 'block';
+                this.startTime = Date.now();
+                
                 let successCount = 0;
                 let errorCount = 0;
-
-                for (const file of this.files) {
-                    try {
-                        const result = await this.processFile(file);
-                        this.processedFiles.push(result);
-                        this.addFileToList(result);
-                        successCount++;
-                    } catch (error) {
-                        this.addErrorToList(file, error.message);
-                        errorCount++;
-                    }
+                const total = this.files.length;
+                
+                // Processar em lotes
+                const batchSize = parseInt(this.batchSize.value);
+                
+                for (let i = 0; i < total; i += batchSize) {
+                    const batch = this.files.slice(i, i + batchSize);
                     
+                    // Processar lote em paralelo
+                    const promises = batch.map(file => this.processFile(file));
+                    const results = await Promise.allSettled(promises);
+                    
+                    results.forEach((result, index) => {
+                        const fileIndex = i + index;
+                        if (result.status === 'fulfilled') {
+                            this.processedFiles.push(result.value);
+                            this.addProcessedFileToList(result.value, fileIndex);
+                            successCount++;
+                        } else {
+                            this.addErrorToList(batch[index], result.reason.message, fileIndex);
+                            errorCount++;
+                        }
+                    });
+                    
+                    // Atualizar progresso
+                    const percent = Math.round((i + batch.length) / total * 100);
+                    this.progressFill.style.width = percent + '%';
+                    this.progressFill.textContent = percent + '%';
+                    
+                    const elapsedSeconds = (Date.now() - this.startTime) / 1000;
+                    const speed = Math.round((i + batch.length) / elapsedSeconds) || 0;
+                    
+                    this.progressText.textContent = `Processados ${i + batch.length} de ${total} arquivos (${speed} arq/seg)`;
                     this.successFilesEl.textContent = successCount;
                     this.errorFilesEl.textContent = errorCount;
+                    this.processingSpeed.textContent = speed;
+                    
+                    // Permitir que a interface atualize
+                    await new Promise(resolve => setTimeout(resolve, 10));
                 }
-
+                
+                this.progressContainer.style.display = 'none';
                 this.downloadAllBtn.disabled = this.processedFiles.length === 0;
                 this.excelBtn.disabled = this.processedFiles.length === 0;
+                this.previewBtn.disabled = false;
+                this.isProcessing = false;
                 
                 if (this.processedFiles.length > 0) {
                     this.excelNote.style.display = 'block';
                 }
+                
+                this.filterInput.disabled = false;
+                this.fileCount.textContent = `(total: ${this.processedFiles.length} processados)`;
+                
+                alert(`✅ Processamento concluído!\n\nSucesso: ${successCount}\nErros: ${errorCount}\nTempo: ${Math.round((Date.now() - this.startTime)/1000)}s`);
+            }
+
+            addProcessedFileToList(result, index) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.dataset.index = index;
+                item.dataset.filename = result.originalName.toLowerCase();
+                item.dataset.cnpj = result.data.cnpj;
+                item.dataset.nf = result.data.nNF;
+                
+                item.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-name">📄 ${this.escapeHtml(result.originalName)}</div>
+                        <div class="file-preview">CNPJ Dest: ${result.data.cnpj} | ${result.data.razao.replace(/_/g, ' ')}</div>
+                        <div class="file-preview">Emitente: ${result.data.emitRazao.replace(/_/g, ' ')}</div>
+                        <div class="file-preview">NF: ${result.data.nNF} | Série: ${result.data.serie} | Valor: R$ ${parseFloat(result.data.vNF).toFixed(2)}</div>
+                        <div class="new-name">✨ Novo: ${this.escapeHtml(result.newName)}</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="download-btn" data-index="${index}">📥 Baixar</button>
+                    </div>
+                `;
+                
+                const btn = item.querySelector('.download-btn');
+                btn.addEventListener('click', () => this.downloadSingle(result));
+                
+                this.fileList.appendChild(item);
             }
 
             async processFile(file) {
@@ -908,7 +1118,7 @@
                         break;
                         
                     case 'valor_data':
-                        name = `R$${data.vNF}${sep}${data.dia}-${data.mes}-${data.ano}`;
+                        name = `R$${parseFloat(data.vNF).toFixed(2)}${sep}${data.dia}-${data.mes}-${data.ano}`;
                         break;
                         
                     case 'natop_data':
@@ -937,7 +1147,7 @@
                             .replace(/{nNF}/g, data.nNF)
                             .replace(/{serie}/g, data.serie)
                             .replace(/{chave}/g, data.chave)
-                            .replace(/{vNF}/g, data.vNF)
+                            .replace(/{vNF}/g, parseFloat(data.vNF).toFixed(2))
                             .replace(/{natOp}/g, data.natOp)
                             .replace(/{emitCNPJ}/g, data.emitCNPJ)
                             .replace(/{emitRazao}/g, data.emitRazao)
@@ -1004,98 +1214,103 @@
                 let csvRows = [];
                 csvRows.push(headers.join(';'));
                 
-                this.processedFiles.forEach(result => {
-                    const d = result.data;
+                // Usar setTimeout para não travar a interface
+                let index = 0;
+                const generateNextBatch = () => {
+                    const batchSize = 1000;
+                    const end = Math.min(index + batchSize, this.processedFiles.length);
                     
-                    // Produtos resumidos
-                    let produtosResumo = '';
-                    d.produtos.forEach(p => {
-                        produtosResumo += `${p.codigo || ''}: ${p.descricao || ''} (Qtd: ${p.quantidade || ''}, R$ ${p.valorTotal || ''}); `;
-                    });
+                    for (let i = index; i < end; i++) {
+                        const result = this.processedFiles[i];
+                        const d = result.data;
+                        
+                        // Produtos resumidos
+                        let produtosResumo = '';
+                        d.produtos.forEach(p => {
+                            produtosResumo += `${p.codigo || ''}: ${p.descricao || ''} (Qtd: ${p.quantidade || ''}, R$ ${p.valorTotal || ''}); `;
+                        });
+                        
+                        const row = [
+                            result.originalName,
+                            result.newName,
+                            d.cnpj,
+                            d.razao.replace(/_/g, ' '),
+                            d.destLogradouro,
+                            d.destNumero,
+                            d.destBairro,
+                            d.destCidade,
+                            d.destUF,
+                            d.destCEP,
+                            d.emitCNPJ,
+                            d.emitRazao.replace(/_/g, ' '),
+                            d.emitFantasia,
+                            d.emitLogradouro,
+                            d.emitNumero,
+                            d.emitBairro,
+                            d.emitCidade,
+                            d.emitUF,
+                            d.emitCEP,
+                            d.nNF,
+                            d.serie,
+                            d.mod,
+                            d.tpNF,
+                            d.chave,
+                            d.natOp.replace(/_/g, ' '),
+                            d.dataCompleta,
+                            d.ano,
+                            d.mes,
+                            d.dia,
+                            parseFloat(d.vNF).toFixed(2),
+                            parseFloat(d.vICMS).toFixed(2),
+                            parseFloat(d.vIPI).toFixed(2),
+                            parseFloat(d.vPIS).toFixed(2),
+                            parseFloat(d.vCOFINS).toFixed(2),
+                            parseFloat(d.vTotTrib).toFixed(2),
+                            produtosResumo
+                        ].map(cell => this.sanitizeForCSV(cell));
+                        
+                        csvRows.push(row.join(';'));
+                    }
                     
-                    const row = [
-                        result.originalName,
-                        result.newName,
-                        d.cnpj,
-                        d.razao.replace(/_/g, ' '),
-                        d.destLogradouro,
-                        d.destNumero,
-                        d.destBairro,
-                        d.destCidade,
-                        d.destUF,
-                        d.destCEP,
-                        d.emitCNPJ,
-                        d.emitRazao.replace(/_/g, ' '),
-                        d.emitFantasia,
-                        d.emitLogradouro,
-                        d.emitNumero,
-                        d.emitBairro,
-                        d.emitCidade,
-                        d.emitUF,
-                        d.emitCEP,
-                        d.nNF,
-                        d.serie,
-                        d.mod,
-                        d.tpNF,
-                        d.chave,
-                        d.natOp.replace(/_/g, ' '),
-                        d.dataCompleta,
-                        d.ano,
-                        d.mes,
-                        d.dia,
-                        d.vNF,
-                        d.vICMS,
-                        d.vIPI,
-                        d.vPIS,
-                        d.vCOFINS,
-                        d.vTotTrib,
-                        produtosResumo
-                    ].map(cell => this.sanitizeForCSV(cell));
+                    index = end;
                     
-                    csvRows.push(row.join(';'));
-                });
+                    if (index < this.processedFiles.length) {
+                        // Continuar na próxima iteração
+                        this.progressText.textContent = `Gerando relatório: ${index} de ${this.processedFiles.length} linhas...`;
+                        setTimeout(generateNextBatch, 10);
+                    } else {
+                        // Finalizado
+                        this.progressContainer.style.display = 'none';
+                        
+                        // Criar arquivo CSV
+                        const csvContent = csvRows.join('\n');
+                        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `Relatorio_NFes_${this.getCurrentDateTime()}.csv`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        
+                        alert(`✅ Relatório Excel gerado com sucesso!\n\nTotal de NF-es: ${this.processedFiles.length}\nLinhas: ${csvRows.length - 1}`);
+                    }
+                };
                 
-                // Criar arquivo CSV
-                const csvContent = csvRows.join('\n');
-                const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' }); // BOM para UTF-8
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `Relatorio_NFes_${this.getCurrentDateTime()}.csv`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                this.progressContainer.style.display = 'block';
+                this.progressFill.style.width = '0%';
+                this.progressFill.textContent = '0%';
+                this.progressText.textContent = 'Gerando relatório Excel...';
                 
-                alert(`✅ Relatório Excel gerado com sucesso!\n\nTotal de NF-es: ${this.processedFiles.length}\nDados exportados: CNPJs, Razões Sociais, Endereços, Valores e mais!`);
+                setTimeout(generateNextBatch, 100);
             }
 
-            addFileToList(result) {
+            addErrorToList(file, errorMessage, index) {
                 const item = document.createElement('div');
                 item.className = 'file-item';
-                item.innerHTML = `
-                    <div class="file-info">
-                        <div class="file-name">📄 ${this.escapeHtml(result.originalName)}</div>
-                        <div class="file-preview">CNPJ Dest: ${result.data.cnpj} | ${result.data.razao.replace(/_/g, ' ')}</div>
-                        <div class="file-preview">Emitente: ${result.data.emitRazao.replace(/_/g, ' ')} | ${result.data.emitCNPJ}</div>
-                        <div class="file-preview">NF: ${result.data.nNF} | Série: ${result.data.serie} | Data: ${result.data.dia}/${result.data.mes}/${result.data.ano}</div>
-                        <div class="file-preview">Valor: R$ ${result.data.vNF} | ICMS: R$ ${result.data.vICMS} | IPI: R$ ${result.data.vIPI}</div>
-                        <div class="new-name">✨ Novo: ${this.escapeHtml(result.newName)}</div>
-                    </div>
-                    <div class="file-actions">
-                        <button class="download-btn" data-name="${this.escapeHtml(result.newName)}">📥 Baixar</button>
-                    </div>
-                `;
-                
-                const btn = item.querySelector('.download-btn');
-                btn.addEventListener('click', () => this.downloadSingle(result));
-                
-                this.fileList.appendChild(item);
-            }
-
-            addErrorToList(file, errorMessage) {
-                const item = document.createElement('div');
-                item.className = 'file-item';
+                item.dataset.index = index;
+                item.dataset.filename = file.name.toLowerCase();
                 item.innerHTML = `
                     <div class="file-info">
                         <div class="file-name">📄 ${this.escapeHtml(file.name)}</div>
@@ -1132,10 +1347,35 @@
                     this.downloadAllBtn.disabled = true;
                     this.downloadAllBtn.textContent = '⏳ Gerando ZIP...';
                     
-                    // Criar ZIP manualmente com múltiplos arquivos
-                    const zipContent = await this.createZipContent();
-                    const blob = new Blob([zipContent], { type: 'application/zip' });
-                    const url = URL.createObjectURL(blob);
+                    // Usar JSZip via CDN para melhor performance com muitos arquivos
+                    if (!window.JSZip) {
+                        await this.loadJSZip();
+                    }
+                    
+                    const JSZip = window.JSZip;
+                    const zip = new JSZip();
+                    
+                    // Adicionar arquivos em lotes
+                    const total = this.processedFiles.length;
+                    for (let i = 0; i < total; i++) {
+                        const result = this.processedFiles[i];
+                        zip.file(result.newName, result.content);
+                        
+                        if (i % 100 === 0) {
+                            this.progressText.textContent = `Adicionando arquivos ao ZIP: ${i} de ${total}`;
+                            await new Promise(resolve => setTimeout(resolve, 10));
+                        }
+                    }
+                    
+                    this.progressText.textContent = 'Gerando arquivo ZIP...';
+                    
+                    const content = await zip.generateAsync({ 
+                        type: 'blob',
+                        compression: 'DEFLATE',
+                        compressionOptions: { level: 6 }
+                    });
+                    
+                    const url = URL.createObjectURL(content);
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = `NFes_${this.getCurrentDateTime()}.zip`;
@@ -1144,196 +1384,39 @@
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
                     
+                    this.progressContainer.style.display = 'none';
                     this.downloadAllBtn.disabled = false;
                     this.downloadAllBtn.textContent = '📥 Baixar Todos Renomeados (ZIP)';
                 } catch (error) {
+                    console.error(error);
                     alert('Erro ao criar ZIP. Baixando individualmente...');
-                    this.processedFiles.forEach(file => this.downloadSingle(file));
+                    this.downloadAllIndividual();
                     this.downloadAllBtn.disabled = false;
                     this.downloadAllBtn.textContent = '📥 Baixar Todos Renomeados (ZIP)';
                 }
             }
 
-            async createZipContent() {
-                // Criar cabeçalhos ZIP simples para cada arquivo
-                let zipData = [];
-                
-                for (let i = 0; i < this.processedFiles.length; i++) {
-                    const result = this.processedFiles[i];
-                    const fileName = result.newName;
-                    const fileContent = result.content;
-                    
-                    // Cabeçalho local do arquivo
-                    const encoder = new TextEncoder();
-                    const fileNameBytes = encoder.encode(fileName);
-                    const contentBytes = encoder.encode(fileContent);
-                    
-                    // Local file header (30 bytes + nome do arquivo)
-                    const header = new Uint8Array(30 + fileNameBytes.length);
-                    
-                    // Signature (4 bytes)
-                    header[0] = 0x50; header[1] = 0x4B; header[2] = 0x03; header[3] = 0x04;
-                    
-                    // Version needed to extract (2 bytes)
-                    header[4] = 0x14; header[5] = 0x00;
-                    
-                    // General purpose bit flag (2 bytes)
-                    header[6] = 0x00; header[7] = 0x00;
-                    
-                    // Compression method (2 bytes) - 0 = stored
-                    header[8] = 0x00; header[9] = 0x00;
-                    
-                    // Last mod file time (2 bytes)
-                    header[10] = 0x00; header[11] = 0x00;
-                    
-                    // Last mod file date (2 bytes)
-                    header[12] = 0x00; header[13] = 0x00;
-                    
-                    // CRC-32 (4 bytes) - simplificado
-                    header[14] = 0x00; header[15] = 0x00; header[16] = 0x00; header[17] = 0x00;
-                    
-                    // Compressed size (4 bytes)
-                    const compSize = contentBytes.length;
-                    header[18] = compSize & 0xFF;
-                    header[19] = (compSize >> 8) & 0xFF;
-                    header[20] = (compSize >> 16) & 0xFF;
-                    header[21] = (compSize >> 24) & 0xFF;
-                    
-                    // Uncompressed size (4 bytes)
-                    header[22] = compSize & 0xFF;
-                    header[23] = (compSize >> 8) & 0xFF;
-                    header[24] = (compSize >> 16) & 0xFF;
-                    header[25] = (compSize >> 24) & 0xFF;
-                    
-                    // File name length (2 bytes)
-                    header[26] = fileNameBytes.length & 0xFF;
-                    header[27] = (fileNameBytes.length >> 8) & 0xFF;
-                    
-                    // Extra field length (2 bytes)
-                    header[28] = 0x00; header[29] = 0x00;
-                    
-                    // File name
-                    for (let j = 0; j < fileNameBytes.length; j++) {
-                        header[30 + j] = fileNameBytes[j];
+            loadJSZip() {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+
+            downloadAllIndividual() {
+                // Baixar um por um com delay
+                let i = 0;
+                const downloadNext = () => {
+                    if (i < this.processedFiles.length) {
+                        this.downloadSingle(this.processedFiles[i]);
+                        i++;
+                        setTimeout(downloadNext, 500);
                     }
-                    
-                    zipData.push(header);
-                    zipData.push(contentBytes);
-                }
-                
-                // Central directory
-                const centralStart = zipData.reduce((acc, val) => acc + val.length, 0);
-                
-                for (let i = 0; i < this.processedFiles.length; i++) {
-                    const result = this.processedFiles[i];
-                    const fileName = result.newName;
-                    const encoder = new TextEncoder();
-                    const fileNameBytes = encoder.encode(fileName);
-                    
-                    // Central directory header (46 bytes + nome do arquivo)
-                    const centralHeader = new Uint8Array(46 + fileNameBytes.length);
-                    
-                    // Signature (4 bytes)
-                    centralHeader[0] = 0x50; centralHeader[1] = 0x4B; centralHeader[2] = 0x01; centralHeader[3] = 0x02;
-                    
-                    // Version made by (2 bytes)
-                    centralHeader[4] = 0x14; centralHeader[5] = 0x00;
-                    
-                    // Version needed to extract (2 bytes)
-                    centralHeader[6] = 0x14; centralHeader[7] = 0x00;
-                    
-                    // General purpose bit flag (2 bytes)
-                    centralHeader[8] = 0x00; centralHeader[9] = 0x00;
-                    
-                    // Compression method (2 bytes)
-                    centralHeader[10] = 0x00; centralHeader[11] = 0x00;
-                    
-                    // Last mod file time (2 bytes)
-                    centralHeader[12] = 0x00; centralHeader[13] = 0x00;
-                    
-                    // Last mod file date (2 bytes)
-                    centralHeader[14] = 0x00; centralHeader[15] = 0x00;
-                    
-                    // CRC-32 (4 bytes)
-                    centralHeader[16] = 0x00; centralHeader[17] = 0x00; centralHeader[18] = 0x00; centralHeader[19] = 0x00;
-                    
-                    // Compressed size (4 bytes)
-                    const compSize = encoder.encode(result.content).length;
-                    centralHeader[20] = compSize & 0xFF;
-                    centralHeader[21] = (compSize >> 8) & 0xFF;
-                    centralHeader[22] = (compSize >> 16) & 0xFF;
-                    centralHeader[23] = (compSize >> 24) & 0xFF;
-                    
-                    // Uncompressed size (4 bytes)
-                    centralHeader[24] = compSize & 0xFF;
-                    centralHeader[25] = (compSize >> 8) & 0xFF;
-                    centralHeader[26] = (compSize >> 16) & 0xFF;
-                    centralHeader[27] = (compSize >> 24) & 0xFF;
-                    
-                    // File name length (2 bytes)
-                    centralHeader[28] = fileNameBytes.length & 0xFF;
-                    centralHeader[29] = (fileNameBytes.length >> 8) & 0xFF;
-                    
-                    // Extra field length (2 bytes)
-                    centralHeader[30] = 0x00; centralHeader[31] = 0x00;
-                    
-                    // File comment length (2 bytes)
-                    centralHeader[32] = 0x00; centralHeader[33] = 0x00;
-                    
-                    // Disk number start (2 bytes)
-                    centralHeader[34] = 0x00; centralHeader[35] = 0x00;
-                    
-                    // Internal file attributes (2 bytes)
-                    centralHeader[36] = 0x00; centralHeader[37] = 0x00;
-                    
-                    // External file attributes (4 bytes)
-                    centralHeader[38] = 0x00; centralHeader[39] = 0x00; centralHeader[40] = 0x00; centralHeader[41] = 0x00;
-                    
-                    // Relative offset of local header (4 bytes)
-                    const offset = i === 0 ? 0 : zipData.slice(0, i).reduce((acc, val) => acc + val.length, 0);
-                    centralHeader[42] = offset & 0xFF;
-                    centralHeader[43] = (offset >> 8) & 0xFF;
-                    centralHeader[44] = (offset >> 16) & 0xFF;
-                    centralHeader[45] = (offset >> 24) & 0xFF;
-                    
-                    // File name
-                    for (let j = 0; j < fileNameBytes.length; j++) {
-                        centralHeader[46 + j] = fileNameBytes[j];
-                    }
-                    
-                    zipData.push(centralHeader);
-                }
-                
-                // End of central directory record (22 bytes)
-                const endHeader = new Uint8Array(22);
-                endHeader[0] = 0x50; endHeader[1] = 0x4B; endHeader[2] = 0x05; endHeader[3] = 0x06;
-                endHeader[4] = 0x00; endHeader[5] = 0x00; // Number of this disk
-                endHeader[6] = 0x00; endHeader[7] = 0x00; // Disk where central directory starts
-                endHeader[8] = this.processedFiles.length & 0xFF; // Number of central directory records on this disk
-                endHeader[9] = (this.processedFiles.length >> 8) & 0xFF;
-                endHeader[10] = this.processedFiles.length & 0xFF; // Total number of central directory records
-                endHeader[11] = (this.processedFiles.length >> 8) & 0xFF;
-                
-                // Size of central directory
-                const centralSize = zipData.slice(this.processedFiles.length).reduce((acc, val) => acc + val.length, 0);
-                endHeader[12] = centralSize & 0xFF;
-                endHeader[13] = (centralSize >> 8) & 0xFF;
-                endHeader[14] = (centralSize >> 16) & 0xFF;
-                endHeader[15] = (centralSize >> 24) & 0xFF;
-                
-                // Offset of start of central directory with respect to the starting disk number
-                const centralOffset = zipData.slice(0, this.processedFiles.length).reduce((acc, val) => acc + val.length, 0);
-                endHeader[16] = centralOffset & 0xFF;
-                endHeader[17] = (centralOffset >> 8) & 0xFF;
-                endHeader[18] = (centralOffset >> 16) & 0xFF;
-                endHeader[19] = (centralOffset >> 24) & 0xFF;
-                
-                // Comment length (2 bytes)
-                endHeader[20] = 0x00; endHeader[21] = 0x00;
-                
-                zipData.push(endHeader);
-                
-                return new Blob(zipData);
+                };
+                downloadNext();
             }
 
             getCurrentDateTime() {
