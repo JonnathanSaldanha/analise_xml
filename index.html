@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renomeador de XML NF-e</title>
+    <title>Renomeador de XML NF-e - Jonnathan Saldanha</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 10px;
@@ -27,10 +27,28 @@
             padding: 30px;
         }
 
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
         h1 {
             color: #333;
-            margin-bottom: 10px;
             font-size: 28px;
+        }
+
+        .developer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .subtitle {
@@ -123,8 +141,14 @@
             flex: 1;
         }
 
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
         .preview-btn {
-            width: 100%;
+            flex: 2;
             padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -134,14 +158,35 @@
             font-weight: bold;
             cursor: pointer;
             transition: opacity 0.3s;
-            margin-bottom: 20px;
         }
 
-        .preview-btn:hover {
+        .excel-btn {
+            flex: 1;
+            padding: 15px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .excel-btn:hover {
+            background: #218838;
+        }
+
+        .excel-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .preview-btn:hover, .excel-btn:hover {
             opacity: 0.9;
         }
 
-        .preview-btn:disabled {
+        .preview-btn:disabled, .excel-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
@@ -162,6 +207,11 @@
             padding: 15px;
             border-bottom: 1px solid #eee;
             background: white;
+            transition: background 0.3s;
+        }
+
+        .file-item:hover {
+            background: #f8f9fa;
         }
 
         .file-item:last-child {
@@ -224,6 +274,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
+            margin-top: 10px;
         }
 
         .download-all-btn:hover {
@@ -307,17 +358,44 @@
             margin-bottom: 15px;
             color: #333;
         }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer strong {
+            color: #667eea;
+        }
+
+        .excel-note {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffc107;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📄 Renomeador de XML NF-e</h1>
-        <p class="subtitle">Selecione os arquivos XML e escolha o formato de renomeação</p>
+        <div class="header">
+            <h1>📄 Renomeador de XML NF-e</h1>
+            <div class="developer">👨‍💻 Jonnathan Saldanha</div>
+        </div>
+        
+        <p class="subtitle">Ferramenta profissional para renomeação e extração de dados de XML NF-e</p>
 
         <div class="upload-area" id="uploadArea">
             <i>📂</i>
             <p>Arraste e solte arquivos XML aqui ou clique para selecionar</p>
-            <small>Suporta múltiplos arquivos</small>
+            <small>Suporta múltiplos arquivos (até 50 por vez)</small>
             <input type="file" id="fileInput" class="file-input" multiple accept=".xml">
         </div>
 
@@ -377,13 +455,26 @@
             </div>
         </div>
 
-        <button class="preview-btn" id="previewBtn" disabled>👁️ Visualizar Renomeação</button>
+        <div class="action-buttons">
+            <button class="preview-btn" id="previewBtn" disabled>👁️ Visualizar Renomeação</button>
+            <button class="excel-btn" id="excelBtn" disabled>📊 Relatório Excel</button>
+        </div>
+
+        <div id="excelNote" class="excel-note" style="display: none;">
+            📊 O relatório Excel contém todos os dados extraídos das NF-e: CNPJ, Razão Social, Emitente, 
+            Valores, Datas, Números, Séries e muito mais!
+        </div>
 
         <div id="fileListContainer" style="display: none;">
             <h3>📋 Arquivos Processados</h3>
             <div class="file-list-container" id="fileList"></div>
             
             <button class="download-all-btn" id="downloadAllBtn" disabled>📥 Baixar Todos Renomeados (ZIP)</button>
+        </div>
+
+        <div class="footer">
+            Desenvolvido por <strong>Jonnathan Saldanha</strong> © 2024 - Todos os direitos reservados<br>
+            <small style="color: #999;">Versão 2.0 - Com relatório Excel detalhado</small>
         </div>
     </div>
 
@@ -405,6 +496,8 @@
                 this.customFormat = document.getElementById('customFormat');
                 this.separator = document.getElementById('separator');
                 this.previewBtn = document.getElementById('previewBtn');
+                this.excelBtn = document.getElementById('excelBtn');
+                this.excelNote = document.getElementById('excelNote');
                 this.fileListContainer = document.getElementById('fileListContainer');
                 this.fileList = document.getElementById('fileList');
                 this.downloadAllBtn = document.getElementById('downloadAllBtn');
@@ -445,6 +538,7 @@
                 });
 
                 this.previewBtn.addEventListener('click', () => this.previewRenaming());
+                this.excelBtn.addEventListener('click', () => this.generateExcelReport());
                 this.downloadAllBtn.addEventListener('click', () => this.downloadAll());
             }
 
@@ -523,6 +617,11 @@
                 }
 
                 this.downloadAllBtn.disabled = this.processedFiles.length === 0;
+                this.excelBtn.disabled = this.processedFiles.length === 0;
+                
+                if (this.processedFiles.length > 0) {
+                    this.excelNote.style.display = 'block';
+                }
             }
 
             async processFile(file) {
@@ -597,35 +696,46 @@
                     razao = getTextNS(dest, 'xNome') || getText(dest, 'xNome');
                 }
 
-                // Dados do Emitente
-                let emitCNPJ = '';
-                let emitRazao = '';
-                let emitUF = '';
-                if (emit) {
-                    emitCNPJ = getTextNS(emit, 'CNPJ') || getText(emit, 'CNPJ');
-                    emitRazao = getTextNS(emit, 'xNome') || getText(emit, 'xNome');
-                    const emitEnder = emit.getElementsByTagNameNS('*', 'enderEmit')[0] || emit.getElementsByTagName('enderEmit')[0];
-                    if (emitEnder) {
-                        emitUF = getTextNS(emitEnder, 'UF') || getText(emitEnder, 'UF');
-                    }
-                }
-
-                // UF Destinatário
-                let destUF = '';
+                // Endereço Destinatário
+                let destLogradouro = '', destNumero = '', destBairro = '', destCidade = '', destUF = '', destCEP = '';
                 if (dest) {
                     const destEnder = dest.getElementsByTagNameNS('*', 'enderDest')[0] || dest.getElementsByTagName('enderDest')[0];
                     if (destEnder) {
+                        destLogradouro = getTextNS(destEnder, 'xLgr') || getText(destEnder, 'xLgr');
+                        destNumero = getTextNS(destEnder, 'nro') || getText(destEnder, 'nro');
+                        destBairro = getTextNS(destEnder, 'xBairro') || getText(destEnder, 'xBairro');
+                        destCidade = getTextNS(destEnder, 'xMun') || getText(destEnder, 'xMun');
                         destUF = getTextNS(destEnder, 'UF') || getText(destEnder, 'UF');
+                        destCEP = getTextNS(destEnder, 'CEP') || getText(destEnder, 'CEP');
+                    }
+                }
+
+                // Dados do Emitente
+                let emitCNPJ = '', emitRazao = '', emitFantasia = '', emitLogradouro = '', emitNumero = '', emitBairro = '', emitCidade = '', emitUF = '', emitCEP = '';
+                if (emit) {
+                    emitCNPJ = getTextNS(emit, 'CNPJ') || getText(emit, 'CNPJ');
+                    emitRazao = getTextNS(emit, 'xNome') || getText(emit, 'xNome');
+                    emitFantasia = getTextNS(emit, 'xFant') || getText(emit, 'xFant');
+                    
+                    const emitEnder = emit.getElementsByTagNameNS('*', 'enderEmit')[0] || emit.getElementsByTagName('enderEmit')[0];
+                    if (emitEnder) {
+                        emitLogradouro = getTextNS(emitEnder, 'xLgr') || getText(emitEnder, 'xLgr');
+                        emitNumero = getTextNS(emitEnder, 'nro') || getText(emitEnder, 'nro');
+                        emitBairro = getTextNS(emitEnder, 'xBairro') || getText(emitEnder, 'xBairro');
+                        emitCidade = getTextNS(emitEnder, 'xMun') || getText(emitEnder, 'xMun');
+                        emitUF = getTextNS(emitEnder, 'UF') || getText(emitEnder, 'UF');
+                        emitCEP = getTextNS(emitEnder, 'CEP') || getText(emitEnder, 'CEP');
                     }
                 }
 
                 // Data
-                let ano = '0000', mes = '00', dia = '00';
+                let ano = '0000', mes = '00', dia = '00', dataCompleta = '';
                 if (ide) {
                     let dataEmissao = getTextNS(ide, 'dhEmi') || getTextNS(ide, 'dEmi') || 
                                      getText(ide, 'dhEmi') || getText(ide, 'dEmi');
                     
                     if (dataEmissao) {
+                        dataCompleta = dataEmissao;
                         if (dataEmissao.includes('T')) {
                             dataEmissao = dataEmissao.split('T')[0];
                         }
@@ -639,18 +749,17 @@
                 }
 
                 // Número NF, Série, Modelo, Tipo NF
-                let nNF = '';
-                let serie = '';
-                let mod = '';
-                let tpNF = '';
+                let nNF = '', serie = '', mod = '', tpNF = '', natOp = '';
                 if (ide) {
                     nNF = getTextNS(ide, 'nNF') || getText(ide, 'nNF');
                     serie = getTextNS(ide, 'serie') || getText(ide, 'serie');
                     mod = getTextNS(ide, 'mod') || getText(ide, 'mod');
-                    tpNF = getTextNS(ide, 'tpNF') || getText(ide, 'tpNF');
-                    // Converte código para texto
-                    if (tpNF === '0') tpNF = 'Entrada';
-                    else if (tpNF === '1') tpNF = 'Saida';
+                    natOp = getTextNS(ide, 'natOp') || getText(ide, 'natOp');
+                    
+                    let tpNFCod = getTextNS(ide, 'tpNF') || getText(ide, 'tpNF');
+                    if (tpNFCod === '0') tpNF = 'Entrada';
+                    else if (tpNFCod === '1') tpNF = 'Saída';
+                    else tpNF = tpNFCod;
                 }
 
                 // Chave
@@ -662,38 +771,82 @@
                     }
                 }
 
-                // Valor Total da NF
-                let vNF = '';
+                // Valores da NF
+                let vNF = '0.00', vICMS = '0.00', vIPI = '0.00', vPIS = '0.00', vCOFINS = '0.00', vTotTrib = '0.00';
                 if (total) {
                     const ICMSTot = total.getElementsByTagNameNS('*', 'ICMSTot')[0] || total.getElementsByTagName('ICMSTot')[0];
                     if (ICMSTot) {
-                        vNF = getTextNS(ICMSTot, 'vNF') || getText(ICMSTot, 'vNF');
+                        vNF = getTextNS(ICMSTot, 'vNF') || getText(ICMSTot, 'vNF') || '0.00';
+                        vICMS = getTextNS(ICMSTot, 'vICMS') || getText(ICMSTot, 'vICMS') || '0.00';
+                        vIPI = getTextNS(ICMSTot, 'vIPI') || getText(ICMSTot, 'vIPI') || '0.00';
+                        vPIS = getTextNS(ICMSTot, 'vPIS') || getText(ICMSTot, 'vPIS') || '0.00';
+                        vCOFINS = getTextNS(ICMSTot, 'vCOFINS') || getText(ICMSTot, 'vCOFINS') || '0.00';
+                        vTotTrib = getTextNS(ICMSTot, 'vTotTrib') || getText(ICMSTot, 'vTotTrib') || '0.00';
                     }
                 }
 
-                // Natureza da Operação
-                let natOp = '';
-                if (ide) {
-                    natOp = getTextNS(ide, 'natOp') || getText(ide, 'natOp');
+                // Produtos (primeiro produto para referência)
+                let produtos = [];
+                const dets = xmlDoc.getElementsByTagNameNS('*', 'det') || xmlDoc.getElementsByTagName('det');
+                for (let i = 0; i < Math.min(dets.length, 5); i++) {
+                    const prod = dets[i].getElementsByTagNameNS('*', 'prod')[0] || dets[i].getElementsByTagName('prod')[0];
+                    if (prod) {
+                        produtos.push({
+                            codigo: getTextNS(prod, 'cProd') || getText(prod, 'cProd'),
+                            descricao: getTextNS(prod, 'xProd') || getText(prod, 'xProd'),
+                            quantidade: getTextNS(prod, 'qCom') || getText(prod, 'qCom'),
+                            valorUnit: getTextNS(prod, 'vUnCom') || getText(prod, 'vUnCom'),
+                            valorTotal: getTextNS(prod, 'vProd') || getText(prod, 'vProd')
+                        });
+                    }
                 }
 
                 return {
+                    // Destinatário
                     cnpj: cnpj || 'CNPJ_NAO_ENCONTRADO',
                     razao: this.sanitizeFileName(razao || 'RAZAO_NAO_ENCONTRADA'),
+                    destLogradouro: destLogradouro || '',
+                    destNumero: destNumero || '',
+                    destBairro: destBairro || '',
+                    destCidade: destCidade || '',
+                    destUF: destUF || 'UF_NAO_ENCONTRADA',
+                    destCEP: destCEP || '',
+                    
+                    // Emitente
                     emitCNPJ: emitCNPJ || 'CNPJ_NAO_ENCONTRADO',
                     emitRazao: this.sanitizeFileName(emitRazao || 'EMITENTE_NAO_ENCONTRADO'),
-                    destUF: destUF || 'UF_NAO_ENCONTRADA',
+                    emitFantasia: emitFantasia || '',
+                    emitLogradouro: emitLogradouro || '',
+                    emitNumero: emitNumero || '',
+                    emitBairro: emitBairro || '',
+                    emitCidade: emitCidade || '',
                     emitUF: emitUF || 'UF_NAO_ENCONTRADA',
+                    emitCEP: emitCEP || '',
+                    
+                    // Data
                     ano: ano,
                     mes: mes,
                     dia: dia,
+                    dataCompleta: dataCompleta,
+                    
+                    // NF
                     nNF: nNF || '000',
                     serie: serie || '000',
                     mod: mod || '00',
                     tpNF: tpNF || '00',
                     chave: chave || 'CHAVE_NAO_ENCONTRADA',
-                    vNF: vNF || '0000',
-                    natOp: this.sanitizeFileName(natOp || 'NATOP_NAO_ENCONTRADA')
+                    natOp: this.sanitizeFileName(natOp || 'NATOP_NAO_ENCONTRADA'),
+                    
+                    // Valores
+                    vNF: vNF,
+                    vICMS: vICMS,
+                    vIPI: vIPI,
+                    vPIS: vPIS,
+                    vCOFINS: vCOFINS,
+                    vTotTrib: vTotTrib,
+                    
+                    // Produtos
+                    produtos: produtos
                 };
             }
 
@@ -708,6 +861,11 @@
                           .replace(/[ç]/g, 'c')
                           .replace(/[ñ]/g, 'n')
                           .substring(0, 50);
+            }
+
+            sanitizeForCSV(str) {
+                if (!str) return '';
+                return '"' + str.replace(/"/g, '""') + '"';
             }
 
             generateNewName(data) {
@@ -799,14 +957,129 @@
                 return `${name}.xml`;
             }
 
+            generateExcelReport() {
+                if (this.processedFiles.length === 0) return;
+                
+                // Cabeçalhos do relatório
+                const headers = [
+                    'Arquivo Original',
+                    'Novo Nome',
+                    'CNPJ Destinatário',
+                    'Razão Social Destinatário',
+                    'Endereço Destinatário',
+                    'Número Destinatário',
+                    'Bairro Destinatário',
+                    'Cidade Destinatário',
+                    'UF Destinatário',
+                    'CEP Destinatário',
+                    'CNPJ Emitente',
+                    'Razão Social Emitente',
+                    'Nome Fantasia Emitente',
+                    'Endereço Emitente',
+                    'Número Emitente',
+                    'Bairro Emitente',
+                    'Cidade Emitente',
+                    'UF Emitente',
+                    'CEP Emitente',
+                    'Número NF',
+                    'Série',
+                    'Modelo',
+                    'Tipo NF',
+                    'Chave NF-e',
+                    'Natureza Operação',
+                    'Data Emissão',
+                    'Ano',
+                    'Mês',
+                    'Dia',
+                    'Valor Total NF (R$)',
+                    'Valor ICMS (R$)',
+                    'Valor IPI (R$)',
+                    'Valor PIS (R$)',
+                    'Valor COFINS (R$)',
+                    'Valor Total Tributos (R$)',
+                    'Produtos (primeiros 5)'
+                ];
+                
+                // Criar linhas do CSV
+                let csvRows = [];
+                csvRows.push(headers.join(';'));
+                
+                this.processedFiles.forEach(result => {
+                    const d = result.data;
+                    
+                    // Produtos resumidos
+                    let produtosResumo = '';
+                    d.produtos.forEach(p => {
+                        produtosResumo += `${p.codigo || ''}: ${p.descricao || ''} (Qtd: ${p.quantidade || ''}, R$ ${p.valorTotal || ''}); `;
+                    });
+                    
+                    const row = [
+                        result.originalName,
+                        result.newName,
+                        d.cnpj,
+                        d.razao.replace(/_/g, ' '),
+                        d.destLogradouro,
+                        d.destNumero,
+                        d.destBairro,
+                        d.destCidade,
+                        d.destUF,
+                        d.destCEP,
+                        d.emitCNPJ,
+                        d.emitRazao.replace(/_/g, ' '),
+                        d.emitFantasia,
+                        d.emitLogradouro,
+                        d.emitNumero,
+                        d.emitBairro,
+                        d.emitCidade,
+                        d.emitUF,
+                        d.emitCEP,
+                        d.nNF,
+                        d.serie,
+                        d.mod,
+                        d.tpNF,
+                        d.chave,
+                        d.natOp.replace(/_/g, ' '),
+                        d.dataCompleta,
+                        d.ano,
+                        d.mes,
+                        d.dia,
+                        d.vNF,
+                        d.vICMS,
+                        d.vIPI,
+                        d.vPIS,
+                        d.vCOFINS,
+                        d.vTotTrib,
+                        produtosResumo
+                    ].map(cell => this.sanitizeForCSV(cell));
+                    
+                    csvRows.push(row.join(';'));
+                });
+                
+                // Criar arquivo CSV
+                const csvContent = csvRows.join('\n');
+                const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' }); // BOM para UTF-8
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Relatorio_NFes_${this.getCurrentDateTime()}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert(`✅ Relatório Excel gerado com sucesso!\n\nTotal de NF-es: ${this.processedFiles.length}\nDados exportados: CNPJs, Razões Sociais, Endereços, Valores e mais!`);
+            }
+
             addFileToList(result) {
                 const item = document.createElement('div');
                 item.className = 'file-item';
                 item.innerHTML = `
                     <div class="file-info">
                         <div class="file-name">📄 ${this.escapeHtml(result.originalName)}</div>
-                        <div class="file-preview">CNPJ Dest: ${result.data.cnpj} | Emitente: ${result.data.emitRazao}</div>
-                        <div class="file-preview">NF: ${result.data.nNF} | Série: ${result.data.serie} | Valor: R$ ${result.data.vNF}</div>
+                        <div class="file-preview">CNPJ Dest: ${result.data.cnpj} | ${result.data.razao.replace(/_/g, ' ')}</div>
+                        <div class="file-preview">Emitente: ${result.data.emitRazao.replace(/_/g, ' ')} | ${result.data.emitCNPJ}</div>
+                        <div class="file-preview">NF: ${result.data.nNF} | Série: ${result.data.serie} | Data: ${result.data.dia}/${result.data.mes}/${result.data.ano}</div>
+                        <div class="file-preview">Valor: R$ ${result.data.vNF} | ICMS: R$ ${result.data.vICMS} | IPI: R$ ${result.data.vIPI}</div>
                         <div class="new-name">✨ Novo: ${this.escapeHtml(result.newName)}</div>
                     </div>
                     <div class="file-actions">
