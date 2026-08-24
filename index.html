@@ -556,6 +556,109 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+
+        .source-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .folder-btn {
+            flex: 1;
+            min-width: 220px;
+            padding: 13px;
+            border: none;
+            border-radius: 5px;
+            background: #6f42c1;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .folder-btn:hover { background: #5a32a3; }
+        .key-search-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #6f42c1;
+        }
+        .key-search-section textarea {
+            width: 100%;
+            min-height: 130px;
+            resize: vertical;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        .key-search-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .key-zip-btn {
+            padding: 13px 20px;
+            background: #6f42c1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .key-zip-btn:hover { background: #5a32a3; }
+        .key-zip-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .key-status { font-size: 13px; color: #555; }
+
+        .sharepoint-section { background:#eef6ff;border-radius:8px;padding:20px;margin-bottom:20px;border-left:4px solid #0078d4; }
+        .sharepoint-row { display:flex;gap:10px;flex-wrap:wrap; }
+        .sharepoint-row input { flex:1;min-width:280px; }
+        .sharepoint-btn { padding:12px 18px;border:0;border-radius:5px;background:#0078d4;color:white;font-weight:bold;cursor:pointer; }
+        .sharepoint-btn:disabled { opacity:.5;cursor:not-allowed; }
+        .sharepoint-status { display:block;margin-top:8px;color:#555;font-size:13px; }
+
+        .site-tabs { display:flex; gap:10px; margin-bottom:20px; border-bottom:2px solid #eee; }
+        .site-tab-btn { padding:12px 20px; border:0; background:#e9ecef; color:#333; font-weight:700; cursor:pointer; border-radius:7px 7px 0 0; }
+        .site-tab-btn.active { background:#667eea; color:white; }
+        .search-tab-panel { display:none; }
+        .search-tab-panel.active { display:block; }
+        .search-tool-section { background:#f8f9fa; border-radius:8px; padding:20px; margin-bottom:20px; border-left:4px solid #17a2b8; }
+        .search-source-actions, .search-result-actions { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+        .search-source-btn, .search-action-btn { flex:1; min-width:210px; padding:13px; border:0; border-radius:5px; color:white; font-size:14px; font-weight:bold; cursor:pointer; }
+        .search-source-btn { background:#17a2b8; }
+        .search-action-btn { background:#6f42c1; }
+        .search-action-btn.secondary { background:#28a745; }
+        .search-source-btn:disabled, .search-action-btn:disabled { opacity:.5; cursor:not-allowed; }
+        .search-query-area { width:100%; min-height:135px; resize:vertical; padding:12px; border:1px solid #ddd; border-radius:5px; font-family:Consolas,monospace; margin-bottom:12px; }
+        .search-index-status { background:#e8f4fd; padding:12px; border-radius:5px; margin-bottom:12px; color:#444; }
+        .search-results-list { max-height:420px; overflow:auto; border:1px solid #ddd; border-radius:5px; background:white; }
+        .search-result-row { padding:10px 12px; border-bottom:1px solid #eee; font-size:13px; }
+        .search-result-row:last-child { border-bottom:0; }
+        .search-result-path { color:#555; word-break:break-all; }
+        .search-result-meta { color:#16713b; margin-top:4px; }
+        .search-filter-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+        .search-filter-row label { font-weight:600; color:#444; }
+        .search-filter-row select { flex:1; min-width:250px; max-width:430px; }
+        .document-badge { display:inline-block; padding:2px 7px; border-radius:4px; color:white; font-size:11px; margin-left:6px; }
+        .document-badge.complete { background:#28a745; }
+        .document-badge.event { background:#fd7e14; }
+        .document-badge.linked { background:#6f42c1; }
+        .search-legend { background:#fff3cd; padding:10px; border-radius:5px; margin-bottom:12px; font-size:13px; }
+        .search-loading-list { display:none; max-height:260px; overflow:auto; border:1px solid #d9e2ec; border-radius:5px; background:#fff; margin-top:10px; }
+        .search-loading-list.active { display:block; }
+        .search-loading-row { padding:8px 10px; border-bottom:1px solid #eee; font-size:12px; }
+        .search-loading-row:last-child { border-bottom:0; }
+        .search-loading-name { font-weight:600; color:#333; }
+        .search-loading-path { color:#666; word-break:break-all; margin-top:2px; }
+        .search-step-hidden { display:none; }
+        .search-progress-track { height:18px; background:#e9ecef; border-radius:9px; overflow:hidden; margin-top:10px; display:none; }
+        .search-progress-track.active { display:block; }
+        .search-progress-bar { height:100%; width:0%; background:linear-gradient(135deg,#17a2b8,#667eea); color:white; font-size:11px; display:flex; align-items:center; justify-content:center; }
     </style>
 </head>
 <body>
@@ -566,11 +669,66 @@
         
         <p class="subtitle">Ferramenta profissional para renomeação e extração de dados de XML NF-e</p>
 
+        <div class="site-tabs" id="siteTabs">
+            <button type="button" class="site-tab-btn active" data-tab="main">📄 Leitor e Relatórios</button>
+            <button type="button" class="site-tab-btn" data-tab="search">🔎 Busca e Separação de XML</button>
+        </div>
+
+        <div id="searchTabPanel" class="search-tab-panel">
+            <div class="search-tool-section">
+                <h3>📂 Fonte de pesquisa</h3>
+                <div class="search-source-actions">
+                    <button type="button" class="search-source-btn" id="searchFolderBtn">📁 Selecionar Pasta</button>
+                    <button type="button" class="search-source-btn" id="searchZipBtn">📦 Selecionar ZIP</button>
+                    <input type="file" id="searchFolderInput" class="file-input" webkitdirectory directory multiple accept=".xml,.zip,application/zip">
+                    <input type="file" id="searchZipInput" class="file-input" multiple accept=".zip,.xml,application/zip">
+                </div>
+                <div class="search-index-status" id="searchIndexStatus">Nenhuma pasta ou ZIP indexado.</div>
+                <div class="search-progress-track" id="searchProgressTrack"><div class="search-progress-bar" id="searchProgressBar">0%</div></div>
+                <div class="search-loading-list" id="searchLoadingList"></div>
+                <small>Os diretórios originais da pasta e os caminhos internos do ZIP serão preservados no arquivo final.</small>
+            </div>
+            <div class="search-tool-section search-step-hidden" id="searchQuerySection">
+                <h3>🔎 Chaves, números e outros dados</h3>
+                <textarea id="searchQueryInput" class="search-query-area" placeholder="Informe uma chave, número da NF, CNPJ/CPF, nome do arquivo ou outro texto. Use uma pesquisa por linha."></textarea>
+                <div class="search-filter-row">
+                    <label for="searchDocumentFilter">Tipo de documento:</label>
+                    <select id="searchDocumentFilter">
+                        <option value="all">NF-e completa e eventos</option>
+                        <option value="complete">Somente NF-e completa</option>
+                        <option value="event">Somente eventos</option>
+                        <option value="main">Uma NF-e principal por chave, ignorando eventos</option>
+                        <option value="linked">Somente XMLs coligados</option>
+                    </select>
+                </div>
+                <div class="search-legend"><b>Legenda:</b> <span class="document-badge complete">NF-e COMPLETA</span> possui dados fiscais e itens. <span class="document-badge event">EVENTO</span> registra ciência ou outro evento. <span class="document-badge linked">COLIGADA</span> referencia ou é referenciada por outra NF-e.</div>
+                <div class="search-result-actions">
+                    <button type="button" class="search-action-btn" id="searchXmlBtn" disabled>🔎 Procurar nos XML</button>
+                    <button type="button" class="search-action-btn secondary" id="downloadSearchZipBtn" disabled>📦 Baixar encontrados com diretórios</button>
+                    <button type="button" class="search-action-btn secondary" id="downloadSearchExcelBtn" disabled>📊 Excel dos XML pesquisados</button>
+                </div>
+                <div class="search-index-status" id="searchResultStatus">Aguardando pesquisa.</div>
+                <div class="search-results-list" id="searchResultsList"></div>
+            </div>
+        </div>
+
         <div class="upload-area" id="uploadArea">
             <i>📂</i>
-            <p>Arraste e solte arquivos XML aqui ou clique para selecionar</p>
-            <small>Suporta milhares de arquivos (processamento em lote)</small>
-            <input type="file" id="fileInput" class="file-input" multiple accept=".xml">
+            <p>Arraste e solte arquivos XML ou ZIP aqui ou clique para selecionar</p>
+            <small>Suporta XML, ZIP e milhares de arquivos em processamento por lote</small>
+            <input type="file" id="fileInput" class="file-input" multiple accept=".xml,.zip,application/zip">
+        </div>
+        <div class="source-buttons">
+            <button type="button" class="folder-btn" id="folderBtn">📁 Selecionar Pasta com XML ou ZIP</button>
+            <input type="file" id="folderInput" class="file-input" webkitdirectory directory multiple accept=".xml,.zip,application/zip">
+        </div>
+        <div class="sharepoint-section">
+            <h3>☁️ Ler pasta do SharePoint</h3>
+            <div class="sharepoint-row">
+                <input type="url" id="sharePointUrl" value="https://eletrobras.sharepoint.com/sites/CSC-CONTABILIDADE-FISCAL/Documentos%20Compartilhados/Forms/AllItems.aspx?id=%2Fsites%2FCSC%2DCONTABILIDADE%2DFISCAL%2FDocumentos%20Compartilhados%2F4%20%2D%20Regularidade%20Fiscal%2F5%2EProjetos%20e%20Outos%2FXML2020%2D2025%2FAXIA%20Norte" placeholder="Cole a URL da pasta do SharePoint">
+                <button type="button" class="sharepoint-btn" id="sharePointBtn">☁️ Carregar XML e ZIP do SharePoint</button>
+            </div>
+            <small class="sharepoint-status" id="sharePointStatus">Usa sua sessão corporativa autenticada no SharePoint.</small>
         </div>
 
         <div class="options-section">
@@ -692,6 +850,15 @@
             <button class="download-auto-btn" id="downloadAutoBtn" disabled>⏬ Download Automático Individual</button>
         </div>
 
+        <div class="key-search-section">
+            <h3>🔎 Gerar ZIP por Chaves de NF-e</h3>
+            <textarea id="keyInput" placeholder="Cole as chaves de acesso aqui. Pode usar uma chave por linha, espaços, vírgulas ou ponto e vírgula."></textarea>
+            <div class="key-search-actions">
+                <button type="button" class="key-zip-btn" id="keyZipBtn" disabled>📦 Gerar ZIP das Chaves Informadas</button>
+                <span class="key-status" id="keyStatus">Processe os XML para habilitar a busca.</span>
+            </div>
+        </div>
+
         <div id="downloadNote" class="download-note" style="display: none;">
             ⬇️ O download automático vai baixar cada arquivo individualmente. O navegador pode perguntar sobre múltiplos downloads - permita para continuar.
         </div>
@@ -735,6 +902,11 @@
             initElements() {
                 this.uploadArea = document.getElementById('uploadArea');
                 this.fileInput = document.getElementById('fileInput');
+                this.folderBtn = document.getElementById('folderBtn');
+                this.folderInput = document.getElementById('folderInput');
+                this.sharePointUrl = document.getElementById('sharePointUrl');
+                this.sharePointBtn = document.getElementById('sharePointBtn');
+                this.sharePointStatus = document.getElementById('sharePointStatus');
                 this.formatSelect = document.getElementById('formatSelect');
                 this.customFormatGroup = document.getElementById('customFormatGroup');
                 this.customFormat = document.getElementById('customFormat');
@@ -764,6 +936,9 @@
                 this.filterInput = document.getElementById('filterInput');
                 this.clearFilterBtn = document.getElementById('clearFilterBtn');
                 this.fileCount = document.getElementById('fileCount');
+                this.keyInput = document.getElementById('keyInput');
+                this.keyZipBtn = document.getElementById('keyZipBtn');
+                this.keyStatus = document.getElementById('keyStatus');
             }
 
             initEventListeners() {
@@ -790,6 +965,11 @@
                 this.fileInput.addEventListener('change', (e) => {
                     this.handleFiles(e.target.files);
                 });
+                this.folderBtn.addEventListener('click', () => this.folderInput.click());
+                this.folderInput.addEventListener('change', (e) => {
+                    this.handleFiles(e.target.files);
+                });
+                this.sharePointBtn.addEventListener('click', () => this.loadSharePointFolder());
 
                 this.formatSelect.addEventListener('change', () => {
                     this.customFormatGroup.style.display = 
@@ -801,6 +981,7 @@
                 this.downloadAllBtn.addEventListener('click', () => this.downloadAll());
                 this.downloadAutoBtn.addEventListener('click', () => this.startAutoDownload());
                 this.stopAutoDownloadBtn.addEventListener('click', () => this.stopAutoDownload());
+                this.keyZipBtn.addEventListener('click', () => this.downloadByKeys());
                 
                 this.filterInput.addEventListener('input', () => this.filterFiles());
                 this.clearFilterBtn.addEventListener('click', () => {
@@ -809,33 +990,145 @@
                 });
             }
 
-            handleFiles(fileList) {
-                const xmlFiles = Array.from(fileList).filter(file => 
-                    file.name.toLowerCase().endsWith('.xml')
-                );
+            parseSharePointFolderUrl(rawUrl) {
+                const url = new URL(rawUrl);
+                const folderPath = decodeURIComponent(url.searchParams.get('id') || '');
+                if (!folderPath.startsWith('/sites/')) throw new Error('URL de pasta do SharePoint inválida.');
+                const sitePath = folderPath.match(/^(\/sites\/[^/]+)/i)?.[1];
+                if (!sitePath) throw new Error('Site do SharePoint não identificado.');
+                return { origin: url.origin, sitePath, folderPath };
+            }
+            escapeODataPath(path) { return String(path).replace(/'/g, "''"); }
+            async fetchSharePointJson(url) {
+                const response = await fetch(url, { credentials:'include', headers:{Accept:'application/json;odata=nometadata'} });
+                if (!response.ok) throw new Error(`SharePoint respondeu ${response.status}.`);
+                return response.json();
+            }
+            async listSharePointFiles(origin, sitePath, folderPath) {
+                const base = `${origin}${sitePath}/_api/web/GetFolderByServerRelativeUrl('${this.escapeODataPath(folderPath)}')`;
+                const filesData = await this.fetchSharePointJson(`${base}/Files?$select=Name,ServerRelativeUrl`);
+                const foldersData = await this.fetchSharePointJson(`${base}/Folders?$select=Name,ServerRelativeUrl`);
+                const files = filesData.value || [];
+                for (const folder of (foldersData.value || []).filter(f => f.Name !== 'Forms')) {
+                    files.push(...await this.listSharePointFiles(origin, sitePath, folder.ServerRelativeUrl));
+                }
+                return files;
+            }
+            async loadSharePointFolder() {
+                try {
+                    this.sharePointBtn.disabled=true; this.sharePointStatus.textContent='Conectando ao SharePoint...';
+                    const {origin,sitePath,folderPath}=this.parseSharePointFolderUrl(this.sharePointUrl.value.trim());
+                    const listed=await this.listSharePointFiles(origin,sitePath,folderPath);
+                    const supported=listed.filter(f=>/\.(xml|zip)$/i.test(f.Name));
+                    if (!supported.length) throw new Error('Nenhum XML ou ZIP encontrado.');
+                    const downloaded=[];
+                    for(let i=0;i<supported.length;i++){
+                        const f=supported[i];
+                        const u=`${origin}${sitePath}/_api/web/GetFileByServerRelativeUrl('${this.escapeODataPath(f.ServerRelativeUrl)}')/$value`;
+                        const r=await fetch(u,{credentials:'include'}); if(!r.ok) throw new Error(`Falha ao baixar ${f.Name} (${r.status}).`);
+                        const b=await r.blob(); downloaded.push(new File([b],f.Name,{type:b.type,lastModified:Date.now()}));
+                        this.sharePointStatus.textContent=`Baixando ${i+1} de ${supported.length}...`;
+                    }
+                    this.sharePointStatus.textContent=`${downloaded.length} arquivos carregados do SharePoint.`;
+                    await this.handleFiles(downloaded);
+                } catch(error) {
+                    console.error(error); this.progressContainer.style.display='none';
+                    this.sharePointStatus.textContent=`Não foi possível carregar: ${error.message}`;
+                    alert('O acesso direto exige que esta página esteja hospedada em uma origem autorizada do SharePoint e que sua sessão corporativa esteja conectada.');
+                } finally { this.sharePointBtn.disabled=false; }
+            }
 
-                if (xmlFiles.length === 0) {
-                    alert('Por favor, selecione apenas arquivos XML.');
+            async handleFiles(fileList) {
+                const selectedFiles = Array.from(fileList);
+                const supportedFiles = selectedFiles.filter(file => {
+                    const name = file.name.toLowerCase();
+                    return name.endsWith('.xml') || name.endsWith('.zip');
+                });
+
+                if (supportedFiles.length === 0) {
+                    alert('Selecione arquivos XML, ZIP ou uma pasta que contenha esses arquivos.');
                     return;
                 }
 
-                if (xmlFiles.length > 10000) {
-                    if (!confirm(`Você selecionou ${xmlFiles.length} arquivos. Isso pode levar alguns minutos. Deseja continuar?`)) {
+                this.progressContainer.style.display = 'block';
+                this.progressFill.style.width = '0%';
+                this.progressFill.textContent = '0%';
+                this.progressText.textContent = 'Lendo arquivos XML e ZIP...';
+
+                try {
+                    const xmlFiles = [];
+                    for (let i = 0; i < supportedFiles.length; i++) {
+                        const file = supportedFiles[i];
+                        const lowerName = file.name.toLowerCase();
+                        if (lowerName.endsWith('.xml')) {
+                            xmlFiles.push(file);
+                        } else if (lowerName.endsWith('.zip')) {
+                            const extracted = await this.extractXMLsFromZip(file, file.webkitRelativePath || file.name);
+                            xmlFiles.push(...extracted);
+                        }
+                        const percent = Math.round(((i + 1) / supportedFiles.length) * 100);
+                        this.progressFill.style.width = percent + '%';
+                        this.progressFill.textContent = percent + '%';
+                        this.progressText.textContent = `Lendo fontes: ${i + 1} de ${supportedFiles.length}. XML encontrados: ${xmlFiles.length}`;
+                        await new Promise(resolve => setTimeout(resolve, 0));
+                    }
+
+                    this.progressContainer.style.display = 'none';
+                    if (xmlFiles.length === 0) {
+                        alert('Nenhum arquivo XML foi encontrado nos arquivos ou pastas selecionados.');
                         return;
                     }
-                }
 
-                this.files = xmlFiles;
-                this.previewBtn.disabled = false;
-                this.statsContainer.style.display = 'flex';
-                this.totalFilesEl.textContent = this.files.length;
-                this.successFilesEl.textContent = '0';
-                this.errorFilesEl.textContent = '0';
-                this.processingSpeed.textContent = '0';
-                this.downloadedCount = 0;
-                this.downloadedCountEl.textContent = '0';
-                
-                this.showSelectedFiles();
+                    if (xmlFiles.length > 10000) {
+                        if (!confirm(`Foram encontrados ${xmlFiles.length} arquivos XML. Isso pode levar alguns minutos. Deseja continuar?`)) return;
+                    }
+
+                    this.files = xmlFiles;
+                    this.processedFiles = [];
+                    this.previewBtn.disabled = false;
+                    this.excelBtn.disabled = true;
+                    this.downloadAllBtn.disabled = true;
+                    this.downloadAutoBtn.disabled = true;
+                    this.keyZipBtn.disabled = true;
+                    this.keyStatus.textContent = 'Clique em Visualizar Renomeação para processar e indexar as chaves.';
+                    this.statsContainer.style.display = 'flex';
+                    this.totalFilesEl.textContent = this.files.length;
+                    this.successFilesEl.textContent = '0';
+                    this.errorFilesEl.textContent = '0';
+                    this.processingSpeed.textContent = '0';
+                    this.downloadedCount = 0;
+                    this.downloadedCountEl.textContent = '0';
+                    this.showSelectedFiles();
+                } catch (error) {
+                    console.error(error);
+                    this.progressContainer.style.display = 'none';
+                    alert(`Erro ao ler os arquivos: ${error.message}`);
+                }
+            }
+
+            async extractXMLsFromZip(zipSource, sourceName = 'arquivo.zip', depth = 0) {
+                if (depth > 5) return [];
+                if (!window.JSZip) await this.loadJSZip();
+
+                const zip = await window.JSZip.loadAsync(zipSource);
+                const entries = Object.values(zip.files).filter(entry => !entry.dir);
+                const xmlFiles = [];
+
+                for (const entry of entries) {
+                    const lowerName = entry.name.toLowerCase();
+                    if (lowerName.endsWith('.xml')) {
+                        const blob = await entry.async('blob');
+                        const cleanName = entry.name.split('/').pop() || `arquivo_${xmlFiles.length + 1}.xml`;
+                        const file = new File([blob], cleanName, { type: 'application/xml', lastModified: Date.now() });
+                        Object.defineProperty(file, 'sourcePath', { value: `${sourceName}/${entry.name}`, configurable: true });
+                        xmlFiles.push(file);
+                    } else if (lowerName.endsWith('.zip')) {
+                        const nestedBuffer = await entry.async('arraybuffer');
+                        const nested = await this.extractXMLsFromZip(nestedBuffer, `${sourceName}/${entry.name}`, depth + 1);
+                        xmlFiles.push(...nested);
+                    }
+                }
+                return xmlFiles;
             }
 
             showSelectedFiles() {
@@ -909,6 +1202,8 @@
                 this.fileList.innerHTML = '';
                 this.progressContainer.style.display = 'block';
                 this.startTime = Date.now();
+                let speedCheckpointTime = performance.now();
+                let speedCheckpointCount = 0;
                 
                 let successCount = 0;
                 let errorCount = 0;
@@ -923,26 +1218,32 @@
                     // Processar lote em paralelo
                     const promises = batch.map(file => this.processFile(file));
                     const results = await Promise.allSettled(promises);
+                    const batchFragment = document.createDocumentFragment();
                     
                     results.forEach((result, index) => {
                         const fileIndex = i + index;
                         if (result.status === 'fulfilled') {
                             this.processedFiles.push(result.value);
-                            this.addProcessedFileToList(result.value, fileIndex);
+                            this.addProcessedFileToList(result.value, fileIndex, batchFragment);
                             successCount++;
                         } else {
-                            this.addErrorToList(batch[index], result.reason.message, fileIndex);
+                            this.addErrorToList(batch[index], result.reason.message, fileIndex, batchFragment);
                             errorCount++;
                         }
                     });
+                    this.fileList.appendChild(batchFragment);
                     
                     // Atualizar progresso
                     const percent = Math.round((i + batch.length) / total * 100);
                     this.progressFill.style.width = percent + '%';
                     this.progressFill.textContent = percent + '%';
                     
-                    const elapsedSeconds = (Date.now() - this.startTime) / 1000;
-                    const speed = Math.round((i + batch.length) / elapsedSeconds) || 0;
+                    const now = performance.now();
+                    const processedNow = i + batch.length;
+                    const intervalSeconds = Math.max((now - speedCheckpointTime) / 1000, 0.001);
+                    const speed = Math.round((processedNow - speedCheckpointCount) / intervalSeconds) || 0;
+                    speedCheckpointTime = now;
+                    speedCheckpointCount = processedNow;
                     
                     this.progressText.textContent = `Processados ${i + batch.length} de ${total} arquivos (${speed} arq/seg)`;
                     this.successFilesEl.textContent = successCount;
@@ -950,13 +1251,17 @@
                     this.processingSpeed.textContent = speed;
                     
                     // Permitir que a interface atualize
-                    await new Promise(resolve => setTimeout(resolve, 10));
+                    if ((i / batchSize) % 10 === 9) {
+                        await new Promise(resolve => requestAnimationFrame(resolve));
+                    }
                 }
                 
                 this.progressContainer.style.display = 'none';
                 this.downloadAllBtn.disabled = this.processedFiles.length === 0;
                 this.downloadAutoBtn.disabled = this.processedFiles.length === 0;
                 this.excelBtn.disabled = this.processedFiles.length === 0;
+                this.keyZipBtn.disabled = this.processedFiles.length === 0;
+                this.keyStatus.textContent = this.processedFiles.length > 0 ? `${this.processedFiles.length} NF-es indexadas para busca por chave.` : 'Nenhuma NF-e disponível para busca.';
                 this.previewBtn.disabled = false;
                 this.isProcessing = false;
                 
@@ -972,7 +1277,7 @@
                 alert(`✅ Processamento concluído!\n\nSucesso: ${successCount}\nErros: ${errorCount}\nTempo: ${Math.round((Date.now() - this.startTime)/1000)}s`);
             }
 
-            addProcessedFileToList(result, index) {
+            addProcessedFileToList(result, index, target = this.fileList) {
                 const item = document.createElement('div');
                 item.className = 'file-item';
                 item.dataset.index = index;
@@ -998,7 +1303,7 @@
                 const btn = item.querySelector('.download-btn');
                 btn.addEventListener('click', () => this.downloadSingle(result, item));
                 
-                this.fileList.appendChild(item);
+                target.appendChild(item);
             }
 
             async processFile(file) {
@@ -1047,6 +1352,16 @@
                     if (!element) return '';
                     const el = element.getElementsByTagNameNS('*', tag)[0];
                     return el ? el.textContent || el.innerHTML : '';
+                }
+
+                // Reconhecer XML de evento vinculado a uma NF-e
+                const procEvento = xmlDoc.getElementsByTagNameNS('*', 'procEventoNFe')[0] || xmlDoc.getElementsByTagName('procEventoNFe')[0];
+                if (procEvento) {
+                    const chaveEvento = getTextNS(xmlDoc, 'chNFe') || getText(xmlDoc, 'chNFe');
+                    const chaveLimpa = String(chaveEvento || '').replace(/\D/g, '');
+                    const dataEvento = getTextNS(xmlDoc, 'dhRegEvento') || getText(xmlDoc, 'dhRegEvento') || getTextNS(xmlDoc, 'dhEvento') || getText(xmlDoc, 'dhEvento');
+                    const parts = dataEvento ? dataEvento.split('T')[0].split('-') : [];
+                    return { cnpj:getTextNS(xmlDoc,'CNPJDest')||getText(xmlDoc,'CNPJDest')||getTextNS(xmlDoc,'CNPJ')||getText(xmlDoc,'CNPJ')||'', razao:'DADOS_NAO_DISPONIVEIS_XML_EVENTO', destLogradouro:'',destNumero:'',destBairro:'',destCidade:'',destUF:chaveLimpa.substring(0,2),destCEP:'', emitCNPJ:chaveLimpa.length===44?chaveLimpa.substring(6,20):'',emitRazao:'DADOS_NAO_DISPONIVEIS_XML_EVENTO',emitFantasia:'',emitLogradouro:'',emitNumero:'',emitBairro:'',emitCidade:'',emitUF:'',emitCEP:'', ano:parts[0]||('20'+chaveLimpa.substring(2,4)),mes:parts[1]||chaveLimpa.substring(4,6),dia:parts[2]||'00',dataCompleta:dataEvento,nNF:chaveLimpa.length===44?String(parseInt(chaveLimpa.substring(25,34),10)||0):'000',serie:chaveLimpa.length===44?String(parseInt(chaveLimpa.substring(22,25),10)||0):'000',mod:chaveLimpa.substring(20,22)||'00',tpNF:'Evento NF-e',chave:chaveEvento||'',natOp:this.sanitizeFileName(getTextNS(xmlDoc,'descEvento')||getText(xmlDoc,'descEvento')||getTextNS(xmlDoc,'xEvento')||getText(xmlDoc,'xEvento')||'EVENTO_NFE'),vNF:'0.00',vICMS:'0.00',vIPI:'0.00',vPIS:'0.00',vCOFINS:'0.00',vTotTrib:'0.00',produtos:[],dadosComplementares:'',referencias:[],coligada:false,tipoDocumento:'Evento NF-e' };
                 }
 
                 // Buscar elementos principais
@@ -1162,18 +1477,60 @@
                     }
                 }
 
-                // Produtos (primeiro produto para referência)
+                // Dados complementares e vínculos entre NF-es
+                const infAdic = xmlDoc.getElementsByTagNameNS('*', 'infAdic')[0] || xmlDoc.getElementsByTagName('infAdic')[0];
+                const infCpl = infAdic ? (getTextNS(infAdic, 'infCpl') || getText(infAdic, 'infCpl')) : '';
+                const infAdFisco = infAdic ? (getTextNS(infAdic, 'infAdFisco') || getText(infAdic, 'infAdFisco')) : '';
+                const dadosComplementares = [infCpl, infAdFisco ? `Informações ao Fisco: ${infAdFisco}` : ''].filter(Boolean).join(' | ');
+                const referencias = [];
+                const nfrefs = xmlDoc.getElementsByTagNameNS('*', 'NFref');
+                for (let r = 0; r < nfrefs.length; r++) {
+                    const ref = getTextNS(nfrefs[r], 'refNFe') || getText(nfrefs[r], 'refNFe') ||
+                                getTextNS(nfrefs[r], 'refCTe') || getText(nfrefs[r], 'refCTe');
+                    if (ref) referencias.push(ref.replace(/\D/g, ''));
+                }
+
+                // Produtos (todos os itens da NF-e)
                 let produtos = [];
                 const dets = xmlDoc.getElementsByTagNameNS('*', 'det') || xmlDoc.getElementsByTagName('det');
-                for (let i = 0; i < Math.min(dets.length, 5); i++) {
+                for (let i = 0; i < dets.length; i++) {
                     const prod = dets[i].getElementsByTagNameNS('*', 'prod')[0] || dets[i].getElementsByTagName('prod')[0];
                     if (prod) {
+                        const imposto = dets[i].getElementsByTagNameNS('*', 'imposto')[0] || dets[i].getElementsByTagName('imposto')[0];
+                        const icms = imposto ? (imposto.getElementsByTagNameNS('*', 'ICMS')[0] || imposto.getElementsByTagName('ICMS')[0]) : null;
+                        const pis = imposto ? (imposto.getElementsByTagNameNS('*', 'PIS')[0] || imposto.getElementsByTagName('PIS')[0]) : null;
+                        const cofins = imposto ? (imposto.getElementsByTagNameNS('*', 'COFINS')[0] || imposto.getElementsByTagName('COFINS')[0]) : null;
                         produtos.push({
                             codigo: getTextNS(prod, 'cProd') || getText(prod, 'cProd'),
+                            ean: getTextNS(prod, 'cEAN') || getText(prod, 'cEAN'),
                             descricao: getTextNS(prod, 'xProd') || getText(prod, 'xProd'),
+                            ncm: getTextNS(prod, 'NCM') || getText(prod, 'NCM'),
+                            cest: getTextNS(prod, 'CEST') || getText(prod, 'CEST'),
+                            cfop: getTextNS(prod, 'CFOP') || getText(prod, 'CFOP'),
+                            unidade: getTextNS(prod, 'uCom') || getText(prod, 'uCom'),
                             quantidade: getTextNS(prod, 'qCom') || getText(prod, 'qCom'),
                             valorUnit: getTextNS(prod, 'vUnCom') || getText(prod, 'vUnCom'),
-                            valorTotal: getTextNS(prod, 'vProd') || getText(prod, 'vProd')
+                            valorTotal: getTextNS(prod, 'vProd') || getText(prod, 'vProd'),
+                            eanTrib: getTextNS(prod, 'cEANTrib') || getText(prod, 'cEANTrib'),
+                            unidadeTrib: getTextNS(prod, 'uTrib') || getText(prod, 'uTrib'),
+                            quantidadeTrib: getTextNS(prod, 'qTrib') || getText(prod, 'qTrib'),
+                            valorUnitTrib: getTextNS(prod, 'vUnTrib') || getText(prod, 'vUnTrib'),
+                            indTot: getTextNS(prod, 'indTot') || getText(prod, 'indTot'),
+                            pedido: getTextNS(prod, 'xPed') || getText(prod, 'xPed'),
+                            itemPedido: getTextNS(prod, 'nItemPed') || getText(prod, 'nItemPed'),
+                            icmsOrigem: getTextNS(icms, 'orig') || getText(icms, 'orig'),
+                            icmsCST: getTextNS(icms, 'CST') || getText(icms, 'CST') || getTextNS(icms, 'CSOSN') || getText(icms, 'CSOSN'),
+                            icmsBase: getTextNS(icms, 'vBC') || getText(icms, 'vBC'),
+                            icmsAliquota: getTextNS(icms, 'pICMS') || getText(icms, 'pICMS'),
+                            icmsValor: getTextNS(icms, 'vICMS') || getText(icms, 'vICMS'),
+                            pisCST: getTextNS(pis, 'CST') || getText(pis, 'CST'),
+                            pisBase: getTextNS(pis, 'vBC') || getText(pis, 'vBC'),
+                            pisAliquota: getTextNS(pis, 'pPIS') || getText(pis, 'pPIS'),
+                            pisValor: getTextNS(pis, 'vPIS') || getText(pis, 'vPIS'),
+                            cofinsCST: getTextNS(cofins, 'CST') || getText(cofins, 'CST'),
+                            cofinsBase: getTextNS(cofins, 'vBC') || getText(cofins, 'vBC'),
+                            cofinsAliquota: getTextNS(cofins, 'pCOFINS') || getText(cofins, 'pCOFINS'),
+                            cofinsValor: getTextNS(cofins, 'vCOFINS') || getText(cofins, 'vCOFINS')
                         });
                     }
                 }
@@ -1223,7 +1580,10 @@
                     vTotTrib: vTotTrib,
                     
                     // Produtos
-                    produtos: produtos
+                    produtos: produtos,
+                    dadosComplementares: dadosComplementares,
+                    referencias: referencias,
+                    coligada: referencias.length > 0
                 };
             }
 
@@ -1370,146 +1730,23 @@
                 return `${name}.xml`;
             }
 
-            generateExcelReport() {
-                if (this.processedFiles.length === 0) return;
-                
-                // Cabeçalhos do relatório
-                const headers = [
-                    'Arquivo Original',
-                    'Novo Nome',
-                    'CNPJ Destinatário',
-                    'Razão Social Destinatário',
-                    'Endereço Destinatário',
-                    'Número Destinatário',
-                    'Bairro Destinatário',
-                    'Cidade Destinatário',
-                    'UF Destinatário',
-                    'CEP Destinatário',
-                    'CNPJ Emitente',
-                    'Razão Social Emitente',
-                    'Nome Fantasia Emitente',
-                    'Endereço Emitente',
-                    'Número Emitente',
-                    'Bairro Emitente',
-                    'Cidade Emitente',
-                    'UF Emitente',
-                    'CEP Emitente',
-                    'Número NF',
-                    'Série',
-                    'Modelo',
-                    'Tipo NF',
-                    'Chave NF-e',
-                    'Natureza Operação',
-                    'Data Emissão',
-                    'Ano',
-                    'Mês',
-                    'Dia',
-                    'Valor Total NF (R$)',
-                    'Valor ICMS (R$)',
-                    'Valor IPI (R$)',
-                    'Valor PIS (R$)',
-                    'Valor COFINS (R$)',
-                    'Valor Total Tributos (R$)',
-                    'Produtos (primeiros 5)'
-                ];
-                
-                // Criar linhas do CSV
-                let csvRows = [];
-                csvRows.push(headers.join(';'));
-                
-                // Usar setTimeout para não travar a interface
-                let index = 0;
-                const generateNextBatch = () => {
-                    const batchSize = 1000;
-                    const end = Math.min(index + batchSize, this.processedFiles.length);
-                    
-                    for (let i = index; i < end; i++) {
-                        const result = this.processedFiles[i];
-                        const d = result.data;
-                        
-                        // Produtos resumidos
-                        let produtosResumo = '';
-                        d.produtos.forEach(p => {
-                            produtosResumo += `${p.codigo || ''}: ${p.descricao || ''} (Qtd: ${p.quantidade || ''}, R$ ${p.valorTotal || ''}); `;
-                        });
-                        
-                        const row = [
-                            result.originalName,
-                            result.newName,
-                            d.cnpj,
-                            d.razao.replace(/_/g, ' '),
-                            d.destLogradouro,
-                            d.destNumero,
-                            d.destBairro,
-                            d.destCidade,
-                            d.destUF,
-                            d.destCEP,
-                            d.emitCNPJ,
-                            d.emitRazao.replace(/_/g, ' '),
-                            d.emitFantasia,
-                            d.emitLogradouro,
-                            d.emitNumero,
-                            d.emitBairro,
-                            d.emitCidade,
-                            d.emitUF,
-                            d.emitCEP,
-                            d.nNF,
-                            d.serie,
-                            d.mod,
-                            d.tpNF,
-                            d.chave,
-                            d.natOp.replace(/_/g, ' '),
-                            d.dataCompleta,
-                            d.ano,
-                            d.mes,
-                            d.dia,
-                            parseFloat(d.vNF).toFixed(2),
-                            parseFloat(d.vICMS).toFixed(2),
-                            parseFloat(d.vIPI).toFixed(2),
-                            parseFloat(d.vPIS).toFixed(2),
-                            parseFloat(d.vCOFINS).toFixed(2),
-                            parseFloat(d.vTotTrib).toFixed(2),
-                            produtosResumo
-                        ].map(cell => this.sanitizeForCSV(cell));
-                        
-                        csvRows.push(row.join(';'));
-                    }
-                    
-                    index = end;
-                    
-                    if (index < this.processedFiles.length) {
-                        // Continuar na próxima iteração
-                        this.progressText.textContent = `Gerando relatório: ${index} de ${this.processedFiles.length} linhas...`;
-                        setTimeout(generateNextBatch, 10);
-                    } else {
-                        // Finalizado
-                        this.progressContainer.style.display = 'none';
-                        
-                        // Criar arquivo CSV
-                        const csvContent = csvRows.join('\n');
-                        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `Relatorio_NFes_${this.getCurrentDateTime()}.csv`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                        
-                        alert(`✅ Relatório Excel gerado com sucesso!\n\nTotal de NF-es: ${this.processedFiles.length}\nLinhas: ${csvRows.length - 1}`);
-                    }
-                };
-                
-                this.progressContainer.style.display = 'block';
-                this.progressFill.style.width = '0%';
-                this.progressFill.textContent = '0%';
-                this.progressText.textContent = 'Gerando relatório Excel...';
-                
-                setTimeout(generateNextBatch, 100);
+            async generateExcelReport() {
+                if (!this.processedFiles.length) return;
+                try {
+                    if (!window.XLSX) await this.loadXLSX();
+                    const baseHeaders=['Arquivo Original','Novo Nome','Chave NF-e','NF','Série','Data','CNPJ Destinatário','Razão Destinatário','CNPJ Emitente','Razão Emitente','Valor NF','Dados Complementares','XML Coligado','Chaves Referenciadas'];
+                    const itemHeaders=[...baseHeaders,'Código','EAN','Descrição','NCM','CEST','CFOP','Unidade','Quantidade','Valor Unitário','Valor Item','EAN Tributável','Unidade Tributável','Quantidade Tributável','Valor Unitário Tributável','Indica Total','Pedido','Item Pedido','ICMS Origem','ICMS CST/CSOSN','Base ICMS','Alíquota ICMS','Valor ICMS','PIS CST','Base PIS','Alíquota PIS','Valor PIS','COFINS CST','Base COFINS','Alíquota COFINS','Valor COFINS'];
+                    const totals=[baseHeaders],items=[itemHeaders],num=v=>Number(String(v||0).replace(',','.'))||0;
+                    this.processedFiles.forEach(r=>{const d=r.data,base=[r.originalName,r.newName,d.chave,d.nNF,d.serie,d.dataCompleta,d.cnpj,String(d.razao||'').replace(/_/g,' '),d.emitCNPJ,String(d.emitRazao||'').replace(/_/g,' '),num(d.vNF),d.dadosComplementares||'',d.coligada?'Sim':'Não',(d.referencias||[]).join(', ')];totals.push(base);(d.produtos?.length?d.produtos:[{}]).forEach(x=>items.push([...base,x.codigo||'',x.ean||'',x.descricao||'',x.ncm||'',x.cest||'',x.cfop||'',x.unidade||'',num(x.quantidade),num(x.valorUnit),num(x.valorTotal),x.eanTrib||'',x.unidadeTrib||'',num(x.quantidadeTrib),num(x.valorUnitTrib),x.indTot||'',x.pedido||'',x.itemPedido||'',x.icmsOrigem||'',x.icmsCST||'',num(x.icmsBase),num(x.icmsAliquota),num(x.icmsValor),x.pisCST||'',num(x.pisBase),num(x.pisAliquota),num(x.pisValor),x.cofinsCST||'',num(x.cofinsBase),num(x.cofinsAliquota),num(x.cofinsValor)]))});
+                    const wb=XLSX.utils.book_new(),wi=XLSX.utils.aoa_to_sheet(items),wt=XLSX.utils.aoa_to_sheet(totals);
+                    wi['!autofilter']={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:items.length-1,c:itemHeaders.length-1}})};wt['!autofilter']={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:totals.length-1,c:baseHeaders.length-1}})};
+                    wi['!cols']=itemHeaders.map((h,i)=>({wch:[0,1,11,16].includes(i)?40:18}));wt['!cols']=baseHeaders.map((h,i)=>({wch:[0,1,11,13].includes(i)?40:18}));
+                    XLSX.utils.book_append_sheet(wb,wi,'Itens Separados');XLSX.utils.book_append_sheet(wb,wt,'Totais por NF-e');
+                    XLSX.writeFile(wb,`Relatorio_NFes_Completo_${this.getCurrentDateTime()}.xlsx`,{bookType:'xlsx',compression:true});
+                } catch(error) { console.error(error); alert('Erro ao gerar o relatório Excel completo.'); }
             }
 
-            addErrorToList(file, errorMessage, index) {
+            addErrorToList(file, errorMessage, index, target = this.fileList) {
                 const item = document.createElement('div');
                 item.className = 'file-item';
                 item.dataset.index = index;
@@ -1523,7 +1760,7 @@
                         <span class="badge badge-secondary">❌ Erro</span>
                     </div>
                 `;
-                this.fileList.appendChild(item);
+                target.appendChild(item);
             }
 
             downloadSingle(result, itemElement = null) {
@@ -1636,6 +1873,90 @@
                 this.stopAutoDownloadBtn.disabled = true;
             }
 
+            normalizeKey(value) {
+                return String(value || '').replace(/\D/g, '');
+            }
+
+            async downloadByKeys() {
+                if (this.processedFiles.length === 0) {
+                    alert('Primeiro carregue e processe os arquivos XML.');
+                    return;
+                }
+
+                const requestedKeys = [...new Set(
+                    this.keyInput.value
+                        .split(/[\s,;]+/)
+                        .map(value => this.normalizeKey(value))
+                        .filter(value => value.length > 0)
+                )];
+
+                if (requestedKeys.length === 0) {
+                    alert('Informe pelo menos uma chave de NF-e.');
+                    return;
+                }
+
+                const invalidKeys = requestedKeys.filter(key => key.length !== 44);
+                const validKeys = requestedKeys.filter(key => key.length === 44);
+                const keyIndex = new Map();
+                this.processedFiles.forEach(result => {
+                    const key = this.normalizeKey(result.data.chave);
+                    if (key.length === 44 && !keyIndex.has(key)) keyIndex.set(key, result);
+                });
+
+                const found = [];
+                const missing = [];
+                validKeys.forEach(key => {
+                    const result = keyIndex.get(key);
+                    if (result) found.push({ key, result });
+                    else missing.push(key);
+                });
+                missing.push(...invalidKeys.map(key => `${key} (chave inválida: ${key.length} dígitos)`));
+
+                this.keyStatus.textContent = `Encontradas: ${found.length} | Não encontradas/inválidas: ${missing.length}`;
+                if (found.length === 0) {
+                    alert(`Nenhuma NF-e foi encontrada.\n\nChaves não encontradas ou inválidas: ${missing.length}`);
+                    return;
+                }
+
+                try {
+                    this.keyZipBtn.disabled = true;
+                    this.keyZipBtn.textContent = '⏳ Gerando ZIP...';
+                    if (!window.JSZip) await this.loadJSZip();
+                    const zip = new window.JSZip();
+                    const usedNames = new Set();
+
+                    found.forEach(({key, result}, index) => {
+                        let fileName = result.newName || result.originalName || `${key}.xml`;
+                        if (usedNames.has(fileName)) fileName = `${key}_${index + 1}_${fileName}`;
+                        usedNames.add(fileName);
+                        zip.file(fileName, result.content);
+                    });
+
+                    if (missing.length > 0) {
+                        zip.file('Chaves_Nao_Encontradas.txt', 'CHAVES NÃO ENCONTRADAS OU INVÁLIDAS\r\n\r\n' + missing.join('\r\n'));
+                    }
+
+                    const content = await zip.generateAsync({
+                        type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 }
+                    });
+                    const url = URL.createObjectURL(content);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `NFes_por_Chave_${this.getCurrentDateTime()}.zip`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    alert(`✅ ZIP gerado!\n\nNF-es encontradas: ${found.length}\nChaves não encontradas/inválidas: ${missing.length}`);
+                } catch (error) {
+                    console.error(error);
+                    alert('Erro ao gerar o ZIP das chaves informadas.');
+                } finally {
+                    this.keyZipBtn.disabled = false;
+                    this.keyZipBtn.textContent = '📦 Gerar ZIP das Chaves Informadas';
+                }
+            }
+
             async downloadAll() {
                 if (this.processedFiles.length === 0) return;
                 
@@ -1697,6 +2018,16 @@
                 }
             }
 
+            loadXLSX() {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+
             loadJSZip() {
                 return new Promise((resolve, reject) => {
                     const script = document.createElement('script');
@@ -1713,9 +2044,461 @@
             }
         }
 
+        class XMLSearchSeparator {
+            constructor(renamer) {
+                this.renamer = renamer;
+                this.indexedFiles = [];
+                this.matches = [];
+                this.directMatches = [];
+                this.missingTerms = [];
+                this.byKey = new Map();
+                this.initElements();
+                this.initTabs();
+                this.initEvents();
+            }
+            initElements() {
+                this.tabs = document.querySelectorAll('.site-tab-btn');
+                this.searchPanel = document.getElementById('searchTabPanel');
+                this.folderBtn = document.getElementById('searchFolderBtn');
+                this.zipBtn = document.getElementById('searchZipBtn');
+                this.folderInput = document.getElementById('searchFolderInput');
+                this.zipInput = document.getElementById('searchZipInput');
+                this.indexStatus = document.getElementById('searchIndexStatus');
+                this.progressTrack = document.getElementById('searchProgressTrack');
+                this.progressBar = document.getElementById('searchProgressBar');
+                this.loadingList = document.getElementById('searchLoadingList');
+                this.querySection = document.getElementById('searchQuerySection');
+                this.queryInput = document.getElementById('searchQueryInput');
+                this.documentFilter = document.getElementById('searchDocumentFilter');
+                this.searchBtn = document.getElementById('searchXmlBtn');
+                this.downloadBtn = document.getElementById('downloadSearchZipBtn');
+                this.excelBtn = document.getElementById('downloadSearchExcelBtn');
+                this.resultStatus = document.getElementById('searchResultStatus');
+                this.resultsList = document.getElementById('searchResultsList');
+                this.container = document.querySelector('.container');
+                this.originalSections = Array.from(this.container.children).filter(el =>
+                    !el.matches('.header,.subtitle,.site-tabs,#searchTabPanel,.footer')
+                );
+            }
+            initTabs() {
+                this.tabs.forEach(btn => btn.addEventListener('click', () => {
+                    const isSearch = btn.dataset.tab === 'search';
+                    this.tabs.forEach(item => item.classList.toggle('active', item === btn));
+                    this.searchPanel.classList.toggle('active', isSearch);
+                    this.originalSections.forEach(section => section.style.display = isSearch ? 'none' : '');
+                }));
+            }
+            initEvents() {
+                this.folderBtn.addEventListener('click', () => this.folderInput.click());
+                this.zipBtn.addEventListener('click', () => this.zipInput.click());
+                this.folderInput.addEventListener('change', e => this.indexSources(e.target.files));
+                this.zipInput.addEventListener('change', e => this.indexSources(e.target.files));
+                this.searchBtn.addEventListener('click', () => this.search());
+                this.documentFilter.addEventListener('change', () => { if (this.queryInput.value.trim()) this.search(); });
+                this.downloadBtn.addEventListener('click', () => this.downloadMatches());
+                this.excelBtn.addEventListener('click', () => this.downloadMatchesExcel());
+            }
+            async indexSources(fileList) {
+                const sources = Array.from(fileList).filter(file => /\.(xml|zip)$/i.test(file.name));
+                if (!sources.length) return alert('Selecione uma pasta, XML ou arquivo ZIP válido.');
+
+                this.indexedFiles = [];
+                this.matches = [];
+                this.querySection.classList.add('search-step-hidden');
+                this.queryInput.value = '';
+                this.documentFilter.value = 'all';
+                this.loadingList.innerHTML = '';
+                this.loadingList.classList.add('active');
+                this.progressTrack.classList.add('active');
+                this.progressBar.style.width = '0%';
+                this.progressBar.textContent = '0%';
+                this.indexStatus.textContent = 'Preparando leitura rápida da fonte selecionada...';
+                this.searchBtn.disabled = true;
+                this.downloadBtn.disabled = true;
+                this.excelBtn.disabled = true;
+                this.resultsList.innerHTML = '';
+
+                try {
+                    if (!window.JSZip) await this.renamer.loadJSZip();
+                    const directXML = sources.filter(file => /\.xml$/i.test(file.name));
+                    const zipFiles = sources.filter(file => /\.zip$/i.test(file.name));
+                    const totalSources = sources.length;
+                    let completedSources = 0;
+                    const updateProgress = (currentName, currentPath) => {
+                        const percent = Math.min(99, Math.round((completedSources / Math.max(totalSources, 1)) * 100));
+                        this.progressBar.style.width = percent + '%';
+                        this.progressBar.textContent = percent + '%';
+                        this.indexStatus.textContent = `Carregando: ${currentName} | XML encontrados: ${this.indexedFiles.length}`;
+                        this.loadingList.innerHTML = `<div class="search-loading-row"><div class="search-loading-name">${this.escape(currentName)}</div><div class="search-loading-path">Origem: ${this.escape(currentPath)}</div></div>`;
+                    };
+
+                    // Arquivos XML da pasta são lidos em paralelo, em lotes, evitando milhares de atualizações no DOM.
+                    const batchSize = 60;
+                    for (let i = 0; i < directXML.length; i += batchSize) {
+                        const batch = directXML.slice(i, i + batchSize);
+                        updateProgress(batch[0].name, batch[0].webkitRelativePath || batch[0].name);
+                        const contents = await Promise.all(batch.map(file => file.text()));
+                        for (let j = 0; j < batch.length; j++) {
+                            const file = batch[j];
+                            this.addIndexedXML(file.name, file.webkitRelativePath || file.name, contents[j]);
+                        }
+                        completedSources += batch.length;
+                        await new Promise(resolve => requestAnimationFrame(resolve));
+                    }
+
+                    // ZIPs continuam suportando subpastas e ZIPs internos, com leitura paralela das entradas XML.
+                    for (const file of zipFiles) {
+                        const sourcePath = file.webkitRelativePath || file.name;
+                        updateProgress(file.name, sourcePath);
+                        await this.indexZipFast(file, sourcePath);
+                        completedSources++;
+                        await new Promise(resolve => requestAnimationFrame(resolve));
+                    }
+
+                    // Classificação linear O(n), importante para dezenas de milhares de XML.
+                    this.byKey.clear();
+                    const referencedKeys = new Set();
+                    for (const file of this.indexedFiles) {
+                        if (file.key) {
+                            if (!this.byKey.has(file.key)) this.byKey.set(file.key, []);
+                            this.byKey.get(file.key).push(file);
+                        }
+                        for (const ref of file.refs) referencedKeys.add(ref);
+                    }
+                    let complete = 0, events = 0, linked = 0;
+                    for (let i = 0; i < this.indexedFiles.length; i++) {
+                        const file = this.indexedFiles[i];
+                        file.linked = file.refs.length > 0 || referencedKeys.has(file.key);
+                        if (file.documentType === 'complete') complete++; else events++;
+                        if (file.linked) linked++;
+                        if (i > 0 && i % 10000 === 0) {
+                            this.indexStatus.textContent = `Finalizando índice: ${i} de ${this.indexedFiles.length} XML...`;
+                            await new Promise(resolve => requestAnimationFrame(resolve));
+                        }
+                    }
+                    this.indexStatus.textContent = `✅ ${this.indexedFiles.length} XML indexados: ${complete} NF-e completas, ${events} eventos e ${linked} coligados.`;
+                    this.progressBar.style.width = '100%';
+                    this.progressBar.textContent = '100%';
+
+                    // Libera imediatamente a etapa de pesquisa antes de montar a amostra visual.
+                    this.querySection.classList.remove('search-step-hidden');
+                    this.searchBtn.disabled = this.indexedFiles.length === 0;
+                    await new Promise(resolve => requestAnimationFrame(resolve));
+
+                    // Exibe uma amostra dos caminhos sem montar milhares de elementos e travar a página.
+                    this.loadingList.innerHTML = '';
+                    const fragment = document.createDocumentFragment();
+                    this.indexedFiles.slice(0, 200).forEach(file => {
+                        const row = document.createElement('div');
+                        row.className = 'search-loading-row';
+                        row.innerHTML = `<div class="search-loading-name">📄 ${this.escape(file.name)}</div><div class="search-loading-path">Destino preservado: ${this.escape(file.path)}</div>`;
+                        fragment.appendChild(row);
+                    });
+                    this.loadingList.appendChild(fragment);
+                    if (this.indexedFiles.length > 200) {
+                        const more = document.createElement('div');
+                        more.className = 'search-loading-row';
+                        more.textContent = `... e mais ${this.indexedFiles.length - 200} XML indexados.`;
+                        this.loadingList.appendChild(more);
+                    }
+                    this.queryInput.focus();
+                } catch (error) {
+                    console.error(error);
+                    this.indexStatus.textContent = `Erro ao indexar: ${error.message}`;
+                    this.progressTrack.classList.remove('active');
+                    this.querySection.classList.add('search-step-hidden');
+                }
+            }
+
+            async indexZipFast(source, sourcePath, depth = 0) {
+                if (depth > 5) return;
+                const zip = await window.JSZip.loadAsync(source);
+                const entries = Object.values(zip.files).filter(entry => !entry.dir);
+                const xmlEntries = entries.filter(entry => /\.xml$/i.test(entry.name));
+                const nestedEntries = entries.filter(entry => /\.zip$/i.test(entry.name));
+                const batchSize = 30;
+
+                for (let i = 0; i < xmlEntries.length; i += batchSize) {
+                    const batch = xmlEntries.slice(i, i + batchSize);
+                    const contents = await Promise.all(batch.map(entry => entry.async('text')));
+                    for (let j = 0; j < batch.length; j++) {
+                        const entry = batch[j];
+                        this.addIndexedXML(entry.name.split('/').pop(), `${sourcePath}/${entry.name}`, contents[j]);
+                    }
+                    if (i % 200 === 0) {
+                        this.indexStatus.textContent = `Extraindo ZIP: ${sourcePath} | XML encontrados: ${this.indexedFiles.length}`;
+                        await new Promise(resolve => requestAnimationFrame(resolve));
+                    }
+                }
+
+                for (const entry of nestedEntries) {
+                    await this.indexZipFast(await entry.async('arraybuffer'), `${sourcePath}/${entry.name}`, depth + 1);
+                }
+            }
+
+            addIndexedXML(name, path, content) {
+                const parser=new DOMParser();
+                const xml=parser.parseFromString(content,'text/xml');
+                if (xml.getElementsByTagName('parsererror').length) return;
+                const text=(tag) => xml.getElementsByTagNameNS('*',tag)[0]?.textContent || xml.getElementsByTagName(tag)[0]?.textContent || '';
+                const isEvent=!!(xml.getElementsByTagNameNS('*','procEventoNFe')[0] || xml.getElementsByTagName('procEventoNFe')[0]);
+                const documentType=isEvent ? 'event' : 'complete';
+                let key=text('chNFe');
+                if (!key) key=(xml.getElementsByTagNameNS('*','infNFe')[0]?.getAttribute('Id') || '').replace(/^NFe/,'');
+                const nf=text('nNF') || (key.length===44 ? String(parseInt(key.substring(25,34),10)||'') : '');
+                const eventCode=isEvent ? (text('tpEvento') || 'EVENTO') : '';
+                const eventName=isEvent ? (text('descEvento') || text('xEvento') || 'Evento NF-e') : '';
+                const cnpj=[...new Set([text('CNPJ'),text('CNPJDest'),text('CPF')].filter(Boolean))];
+                const data=this.renamer.extractDataFromXML(xml);
+                const refs=Array.from(xml.getElementsByTagNameNS('*','refNFe')).map(node => node.textContent.replace(/\D/g,''));
+                const productSearch=(data.produtos || []).map(product => [
+                    product.codigo, product.ean, product.descricao, product.ncm, product.cest,
+                    product.cfop, product.pedido, product.itemPedido
+                ].filter(Boolean).join(' ')).join(' ');
+                const searchable=[
+                    name,path,key,nf,...cnpj,eventCode,eventName,data.cnpj,data.razao,data.emitCNPJ,
+                    data.emitRazao,data.natOp,data.dadosComplementares,refs.join(' '),productSearch
+                ].filter(Boolean).join(' ').toLowerCase();
+                this.indexedFiles.push({name,path,content,key,nf,cnpj,searchable,documentType,eventCode,eventName,data,refs,linked:false});
+            }
+            applyDocumentFilter(files) {
+                const filter=this.documentFilter.value;
+                if (filter==='complete') return files.filter(file=>file.documentType==='complete');
+                if (filter==='event') return files.filter(file=>file.documentType==='event');
+                if (filter==='linked') return files.filter(file=>file.linked);
+                if (filter==='main') {
+                    const unique=new Map();
+                    files.filter(file=>file.documentType==='complete').forEach(file=>{
+                        const identity=file.key || file.path;
+                        if (!unique.has(identity)) unique.set(identity,file);
+                    });
+                    return [...unique.values()];
+                }
+                return files;
+            }
+            search() {
+                const terms=[...new Set(this.queryInput.value.split(/\r?\n|[,;]+/).map(v=>v.trim().toLowerCase()).filter(Boolean))];
+                if (!terms.length) return alert('Informe pelo menos uma chave, NF, CNPJ ou texto para pesquisa.');
+                const termMatches=file=>terms.some(term=>file.searchable.includes(term.replace(/\s/g,'')) || file.searchable.includes(term));
+                this.directMatches=this.applyDocumentFilter(this.indexedFiles.filter(termMatches));
+
+                // Inclui automaticamente as NF-es relacionadas por NFref/refNFe, nos dois sentidos.
+                const selected = new Map();
+                const queue = [];
+                const addFile = (file, relation = 'Pesquisa direta', originKey = '') => {
+                    const identity = `${file.path}|${file.key}|${file.documentType}|${file.eventCode}`;
+                    if (selected.has(identity)) return false;
+                    file.matchRelation = relation;
+                    file.matchOriginKey = originKey;
+                    selected.set(identity, file);
+                    queue.push(file);
+                    return true;
+                };
+                this.directMatches.forEach(file => addFile(file));
+
+                // Expande a cadeia de coligações de forma controlada e linear.
+                const reverseRefs = new Map();
+                for (const file of this.indexedFiles) {
+                    for (const ref of file.refs || []) {
+                        if (!reverseRefs.has(ref)) reverseRefs.set(ref, []);
+                        reverseRefs.get(ref).push(file);
+                    }
+                }
+                for (let position = 0; position < queue.length; position++) {
+                    const current = queue[position];
+                    for (const referencedKey of current.refs || []) {
+                        for (const related of this.byKey.get(referencedKey) || []) {
+                            addFile(related, 'Nota referenciada pela NF-e pesquisada', current.key);
+                        }
+                    }
+                    for (const parent of reverseRefs.get(current.key) || []) {
+                        addFile(parent, 'NF-e que referencia a nota pesquisada', current.key);
+                    }
+                }
+                this.matches=[...selected.values()];
+
+                const foundTerms=terms.filter(term=>this.applyDocumentFilter(this.indexedFiles.filter(file=>file.searchable.includes(term.replace(/\s/g,'')) || file.searchable.includes(term))).length>0);
+                this.missingTerms=terms.filter(term=>!foundTerms.includes(term));
+                const complete=this.matches.filter(f=>f.documentType==='complete').length;
+                const events=this.matches.filter(f=>f.documentType==='event').length;
+                const linked=this.matches.filter(f=>f.linked).length;
+                const included=this.matches.filter(f=>f.matchRelation!=='Pesquisa direta').length;
+                this.resultStatus.textContent=`Encontrados: ${this.matches.length} XML (${complete} completos, ${events} eventos e ${linked} coligados) | ${included} relacionados incluídos automaticamente | Pesquisas não localizadas: ${this.missingTerms.length}`;
+                this.resultsList.innerHTML='';
+                const fragment=document.createDocumentFragment();
+                this.matches.slice(0,1000).forEach(file=>{
+                    const row=document.createElement('div'); row.className='search-result-row';
+                    const label=file.documentType==='event' ? `EVENTO ${file.eventCode}` : 'NF-e COMPLETA';
+                    const badgeClass=file.documentType==='event' ? 'event' : 'complete';
+                    const linkedBadge=file.linked ? '<span class="document-badge linked">COLIGADA</span>' : '';
+                    const relation=file.matchRelation && file.matchRelation!=='Pesquisa direta' ? `<div class="search-result-meta">🔗 Incluída automaticamente: ${this.escape(file.matchRelation)}${file.matchOriginKey ? ' | Origem: '+this.escape(file.matchOriginKey) : ''}</div>` : '';
+                    row.innerHTML=`<strong>${this.escape(file.name)}</strong><span class="document-badge ${badgeClass}">${this.escape(label)}</span>${linkedBadge}<div class="search-result-path">📁 ${this.escape(file.path)}</div><div class="search-result-meta">Chave: ${this.escape(file.key||'Não identificada')} | NF: ${this.escape(file.nf||'Não identificada')}${file.eventName ? ' | '+this.escape(file.eventName) : ''}</div>${relation}`;
+                    fragment.appendChild(row);
+                });
+                this.resultsList.appendChild(fragment);
+                this.downloadBtn.disabled=this.matches.length===0;
+                this.excelBtn.disabled=this.matches.length===0;
+            }
+
+            renamedFileName(file,index=0) {
+                const rawBase=(file.key || file.name.replace(/\.xml$/i,'')).replace(/[^a-zA-Z0-9_-]/g,'_');
+                let suffix=file.documentType==='event' ? `_EVENTO_${file.eventCode || 'NFE'}` : '_NFE_COMPLETA';
+                if (file.linked) suffix += '_COLIGADA';
+                return `${rawBase}${suffix}${index ? '_'+index : ''}.xml`;
+            }
+            async downloadMatches() {
+                if (!this.matches.length) return;
+                try {
+                    this.downloadBtn.disabled=true;
+                    if (!window.JSZip) await this.renamer.loadJSZip();
+                    const zip=new window.JSZip();
+                    const used=new Set();
+                    this.matches.forEach((file,index)=>{
+                        const normalized=file.path.replace(/^[A-Za-z]:/,'').replace(/^[/\\]+/,'').replace(/\\/g,'/');
+                        const directory=normalized.includes('/') ? normalized.substring(0,normalized.lastIndexOf('/')+1) : '';
+                        let outputPath=directory+this.renamedFileName(file);
+                        if (used.has(outputPath)) outputPath=directory+this.renamedFileName(file,index+1);
+                        used.add(outputPath); zip.file(outputPath,file.content);
+                    });
+                    if (this.missingTerms.length) zip.file('Pesquisas_Nao_Encontradas.txt',this.missingTerms.join('\r\n'));
+                    const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}});
+                    const url=URL.createObjectURL(blob); const a=document.createElement('a');
+                    a.href=url; a.download=`XMLs_Encontrados_${this.renamer.getCurrentDateTime()}.zip`;
+                    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+                } finally { this.downloadBtn.disabled=false; }
+            }
+            async downloadMatchesExcel() {
+                if (!this.matches.length) return;
+                try {
+                    this.excelBtn.disabled = true;
+                    this.excelBtn.textContent = '⏳ Gerando Excel...';
+                    if (!window.XLSX) await this.renamer.loadXLSX();
+
+                    const baseHeaders = [
+                        'Arquivo Original', 'Arquivo Renomeado', 'Diretório', 'Tipo Documento',
+                        'XML Coligado', 'Chaves Referenciadas', 'Forma de Inclusão', 'Chave de Origem da Coligação', 'Código Evento', 'Descrição Evento',
+                        'Chave NF-e', 'Número NF', 'Série', 'Modelo', 'Tipo NF', 'Natureza Operação',
+                        'Data Emissão', 'Ano', 'Mês', 'Dia',
+                        'CNPJ Destinatário', 'Razão Social Destinatário', 'Endereço Destinatário',
+                        'Número Destinatário', 'Bairro Destinatário', 'Cidade Destinatário',
+                        'UF Destinatário', 'CEP Destinatário',
+                        'CNPJ Emitente', 'Razão Social Emitente', 'Nome Fantasia Emitente',
+                        'Endereço Emitente', 'Número Emitente', 'Bairro Emitente', 'Cidade Emitente',
+                        'UF Emitente', 'CEP Emitente',
+                        'Valor Total NF (R$)', 'Valor ICMS (R$)', 'Valor IPI (R$)',
+                        'Valor PIS (R$)', 'Valor COFINS (R$)', 'Valor Total Tributos (R$)',
+                        'Dados Complementares'
+                    ];
+                    const itemHeaders = [
+                        ...baseHeaders, 'Item', 'Código Produto', 'EAN', 'Descrição Produto', 'NCM',
+                        'CEST', 'CFOP', 'Unidade Comercial', 'Quantidade Comercial',
+                        'Valor Unitário Comercial (R$)', 'Valor Total Item (R$)', 'EAN Tributável',
+                        'Unidade Tributável', 'Quantidade Tributável', 'Valor Unitário Tributável (R$)',
+                        'Indica Valor Total', 'Pedido', 'Item Pedido', 'ICMS Origem', 'ICMS CST/CSOSN',
+                        'Base ICMS (R$)', 'Alíquota ICMS (%)', 'Valor ICMS Item (R$)', 'PIS CST',
+                        'Base PIS (R$)', 'Alíquota PIS (%)', 'Valor PIS Item (R$)', 'COFINS CST',
+                        'Base COFINS (R$)', 'Alíquota COFINS (%)', 'Valor COFINS Item (R$)'
+                    ];
+
+                    const totals = [baseHeaders];
+                    const items = [itemHeaders];
+                    const text = value => String(value ?? '');
+                    const number = value => {
+                        const parsed = Number(String(value ?? '0').replace(',', '.'));
+                        return Number.isFinite(parsed) ? parsed : 0;
+                    };
+                    const date = value => {
+                        if (!value) return '';
+                        const parts = String(value).split('T')[0].split('-').map(Number);
+                        return parts.length === 3 && parts.every(Boolean) ? new Date(parts[0], parts[1] - 1, parts[2]) : '';
+                    };
+
+                    for (let fileIndex = 0; fileIndex < this.matches.length; fileIndex++) {
+                        const file = this.matches[fileIndex];
+                        const d = file.data || {};
+                        const refs = [...new Set([...(file.refs || []), ...(d.referencias || [])])];
+                        const base = [
+                            text(file.name), text(this.renamedFileName(file)), text(file.path),
+                            file.documentType === 'event' ? 'Evento NF-e' : 'NF-e Completa',
+                            file.linked ? 'Sim' : 'Não', refs.join(', '), text(file.matchRelation || 'Pesquisa direta'),
+                            text(file.matchOriginKey), text(file.eventCode), text(file.eventName), text(file.key), text(d.nNF || file.nf), text(d.serie),
+                            text(d.mod), text(d.tpNF), text(d.natOp).replace(/_/g, ' '),
+                            date(d.dataCompleta), number(d.ano), number(d.mes), number(d.dia),
+                            text(d.cnpj), text(d.razao).replace(/_/g, ' '), text(d.destLogradouro),
+                            text(d.destNumero), text(d.destBairro), text(d.destCidade), text(d.destUF),
+                            text(d.destCEP), text(d.emitCNPJ), text(d.emitRazao).replace(/_/g, ' '),
+                            text(d.emitFantasia), text(d.emitLogradouro), text(d.emitNumero),
+                            text(d.emitBairro), text(d.emitCidade), text(d.emitUF), text(d.emitCEP),
+                            number(d.vNF), number(d.vICMS), number(d.vIPI), number(d.vPIS),
+                            number(d.vCOFINS), number(d.vTotTrib), text(d.dadosComplementares)
+                        ];
+                        totals.push(base);
+                        const products = d.produtos?.length ? d.produtos : [{}];
+                        products.forEach((product, itemIndex) => items.push([
+                            ...base, d.produtos?.length ? itemIndex + 1 : '', text(product.codigo),
+                            text(product.ean), text(product.descricao), text(product.ncm), text(product.cest),
+                            text(product.cfop), text(product.unidade), number(product.quantidade),
+                            number(product.valorUnit), number(product.valorTotal), text(product.eanTrib),
+                            text(product.unidadeTrib), number(product.quantidadeTrib), number(product.valorUnitTrib),
+                            text(product.indTot), text(product.pedido), text(product.itemPedido),
+                            text(product.icmsOrigem), text(product.icmsCST), number(product.icmsBase),
+                            number(product.icmsAliquota), number(product.icmsValor), text(product.pisCST),
+                            number(product.pisBase), number(product.pisAliquota), number(product.pisValor),
+                            text(product.cofinsCST), number(product.cofinsBase), number(product.cofinsAliquota),
+                            number(product.cofinsValor)
+                        ]));
+                        if (fileIndex > 0 && fileIndex % 2000 === 0) {
+                            this.resultStatus.textContent = `Gerando Excel: ${fileIndex} de ${this.matches.length} XML...`;
+                            await new Promise(resolve => requestAnimationFrame(resolve));
+                        }
+                    }
+
+                    const wb = XLSX.utils.book_new();
+                    const wsItems = XLSX.utils.aoa_to_sheet(items, { cellDates: true });
+                    const wsTotals = XLSX.utils.aoa_to_sheet(totals, { cellDates: true });
+                    const configure = (ws, rows, headers, withItems) => {
+                        ws['!autofilter'] = { ref: XLSX.utils.encode_range({s:{r:0,c:0},e:{r:rows.length-1,c:headers.length-1}}) };
+                        ws['!cols'] = headers.map((header, index) => ({ wch: [0,1,2,5,19,27,41,45].includes(index) ? 38 : 18 }));
+                        const dateColumn = 16;
+                        const textColumns = [3,4,5,6,7,8,10,11,12,20,27,28,36];
+                        const moneyColumns = withItems ? [37,38,39,40,41,42,53,54,65,68,71] : [37,38,39,40,41,42];
+                        for (let row = 1; row < rows.length; row++) {
+                            const dateCell = ws[XLSX.utils.encode_cell({r:row,c:dateColumn})];
+                            if (dateCell && dateCell.v !== '') dateCell.z = 'dd/mm/yyyy';
+                            textColumns.forEach(column => {
+                                const cell = ws[XLSX.utils.encode_cell({r:row,c:column})];
+                                if (cell) { cell.t = 's'; cell.v = String(cell.v ?? ''); cell.z = '@'; }
+                            });
+                            moneyColumns.forEach(column => {
+                                const cell = ws[XLSX.utils.encode_cell({r:row,c:column})];
+                                if (cell) cell.z = '#,##0.00';
+                            });
+                        }
+                    };
+                    configure(wsItems, items, itemHeaders, true);
+                    configure(wsTotals, totals, baseHeaders, false);
+                    XLSX.utils.book_append_sheet(wb, wsItems, 'Itens Separados');
+                    XLSX.utils.book_append_sheet(wb, wsTotals, 'Totais por NF-e');
+                    XLSX.writeFile(wb, `Relatorio_XMLs_Pesquisados_Completo_${this.renamer.getCurrentDateTime()}.xlsx`, {bookType:'xlsx', cellDates:true, compression:true});
+                    const linkedCount = this.matches.filter(file => file.linked).length;
+                    const autoCount = this.matches.filter(file => file.matchRelation && file.matchRelation !== 'Pesquisa direta').length;
+                    this.resultStatus.textContent = `Excel gerado: ${this.matches.length} XML, incluindo ${linkedCount} coligados e ${autoCount} relacionados automáticos.`;
+                } catch (error) {
+                    console.error(error);
+                    alert('Erro ao gerar o Excel dos XML pesquisados.');
+                } finally {
+                    this.excelBtn.disabled = false;
+                    this.excelBtn.textContent = '📊 Excel dos XML pesquisados';
+                }
+            }
+
+            escape(value) { const div=document.createElement('div'); div.textContent=String(value||''); return div.innerHTML; }
+        }
+
         // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
             window.renamer = new NFeRenamer();
+            window.xmlSearchSeparator = new XMLSearchSeparator(window.renamer);
         });
     </script>
 </body>
